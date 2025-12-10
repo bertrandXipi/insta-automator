@@ -3,7 +3,7 @@
 import { Post } from './types';
 
 // Augmentez ce numéro à chaque fois que vous modifiez le code pour que l'équipe puisse vérifier
-export const APP_VERSION = "v2.8 (Correction p3)"; 
+export const APP_VERSION = "v2.9 (DatePicker)"; 
 
 export const STRATEGY_HASHTAGS = [
   "#JeanDeLuz", "#PaysBasque", "#NoelBasque", "#CharcuterieBasque",
