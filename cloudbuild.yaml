@@ -1,3 +1,6 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
   # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
@@ -20,6 +23,7 @@ steps:
       - 'us-west1'
       - '--platform'
       - 'managed'
+      - '--allow-unauthenticated'
 
 images:
   - 'gcr.io/$PROJECT_ID/jean-de-luz-dashboard:$COMMIT_SHA'
