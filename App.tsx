@@ -94,7 +94,7 @@ export default function App() {
     setIsLoading(true);
     try {
       const data = await database.getAllPosts();
-      setPosts(data);
+      setPosts(sortPostsByDate(data));
       setConnectionStatus('connected');
     } catch (error) {
       console.error("Erreur de chargement", error);
@@ -124,8 +124,21 @@ export default function App() {
     }
   };
 
+  // Fonction utilitaire pour parser et comparer les dates au format "DD/MM"
+  const parseDate = (dateStr: string): number => {
+    const [day, month] = dateStr.split('/').map(Number);
+    return month * 100 + day; // Ex: "05/12" -> 1205, "15/01" -> 115
+  };
+
+  const sortPostsByDate = (postsToSort: Post[]): Post[] => {
+    return [...postsToSort].sort((a, b) => parseDate(a.date) - parseDate(b.date));
+  };
+
   const handleUpdatePost = async (updatedPost: Post) => {
-    setPosts(current => current.map(p => p.id === updatedPost.id ? updatedPost : p));
+    setPosts(current => {
+      const updated = current.map(p => p.id === updatedPost.id ? updatedPost : p);
+      return sortPostsByDate(updated);
+    });
     if (selectedPost?.id === updatedPost.id) {
         setSelectedPost(updatedPost);
     }

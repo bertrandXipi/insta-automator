@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Post } from '../types';
 import { X, Copy, Image, Hash, MessageCircle, Send, CheckCircle, ChevronLeft, ChevronRight, User, Loader2, Upload, Download, Save, Check, Instagram, Wifi, AlertTriangle, Maximize2 } from 'lucide-react';
 import { database } from '../services/database';
+import DatePicker from './DatePicker';
 
 interface PostDetailModalProps {
   post: Post;
@@ -358,9 +359,10 @@ export default function PostDetailModal({
                             {post.format}
                         </span>
                     </div>
-                     <span className="text-lg font-bold text-gray-900 dark:text-white border-b-2 border-jdl-red pb-1">
-                        {post.date}
-                    </span>
+                     <DatePicker 
+                        value={post.date} 
+                        onSave={(newDate) => updateField('date', newDate)} 
+                     />
                 </div>
 
                 <div className="mb-2">
