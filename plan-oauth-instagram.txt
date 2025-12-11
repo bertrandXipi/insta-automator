@@ -1,0 +1,100 @@
+## Plan d'implémentation : OAuth Instagram multi-utilisateurs
+
+### Phase 1 : Base de données (Supabase)
+
+**1.1 Créer la table `instagram_accounts`**
+```sql
+CREATE TABLE instagram_accounts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL UNIQUE,  -- identifiant utilisateur de ton app
+  ig_user_id TEXT NOT NULL,       -- ID Instagram Business
+  access_token TEXT NOT NULL,     -- Token long-lived
+  token_expires_at TIMESTAMP,     -- Date d'expiration
+  ig_username TEXT,               -- Nom du compte Instagram
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+---
+
+### Phase 2 : Backend Supabase (Edge Functions)
+
+**2.1 Créer `supabase/functions/instagram-auth/index.ts`**
+- Endpoint pour initier le flow OAuth (génère l'URL de redirection Facebook)
+
+**2.2 Créer `supabase/functions/instagram-callback/index.ts`**
+- Reçoit le `code` de Facebook après autorisation
+- Échange le code contre un short-lived token
+- Échange le short-lived contre un long-lived token (60 jours)
+- Récupère l'IG User ID et username
+- Stocke tout dans `instagram_accounts`
+
+**2.3 Modifier `supabase/functions/publish-instagram/index.ts`**
+- Au lieu de lire `INSTAGRAM_USER_ID` et `INSTAGRAM_TOKEN` depuis les env vars
+- Récupérer le token depuis la table `instagram_accounts` selon le `user_id`
+
+**2.4 Créer `supabase/functions/instagram-status/index.ts`**
+- Vérifie si un utilisateur a un compte connecté
+- Retourne le statut + username si connecté
+
+---
+
+### Phase 3 : Frontend React
+
+**3.1 Ajouter au `types.ts`**
+```typescript
+export interface InstagramAccount {
+  connected: boolean;
+  username?: string;
+  expiresAt?: string;
+}
+```
+
+**3.2 Ajouter au `services/database.ts`**
+- `getInstagramStatus(userId)` → appelle `instagram-status`
+- `initiateInstagramAuth(userId)` → appelle `instagram-auth`, retourne l'URL OAuth
+- `disconnectInstagram(userId)` → supprime le compte de la table
+
+**3.3 Modifier `App.tsx` (zone "Compte lié")**
+- État : `instagramAccount: InstagramAccount | null`
+- Au chargement : vérifier le statut via `getInstagramStatus()`
+- Affichage conditionnel :
+  - **Non connecté** → Bouton "Connecter Instagram" (rose/gradient)
+  - **Connecté** → "Compte lié" + `@username` + point vert + bouton déconnexion
+
+---
+
+### Phase 4 : Configuration Facebook Developer
+
+**4.1 Ajouter l'URL de callback OAuth**
+- Dans ton app Facebook > Paramètres > OAuth Redirect URIs
+- Ajouter : `https://xczeyrugggausivlyfjb.supabase.co/functions/v1/instagram-callback`
+
+**4.2 Vérifier les permissions demandées**
+- `instagram_basic`
+- `instagram_content_publish`
+- `pages_show_list`
+- `pages_read_engagement`
+- `business_management` (peut être nécessaire)
+
+---
+
+### Phase 5 : Gestion du token (optionnel mais recommandé)
+
+**5.1 Refresh automatique du token**
+- Les long-lived tokens expirent après 60 jours
+- Créer un cron job ou une Edge Function schedulée pour refresh avant expiration
+- Ou : vérifier à chaque publication et refresh si < 7 jours restants
+
+---
+
+### Ordre d'exécution recommandé
+
+1. **Phase 1** - Table SQL (5 min)
+2. **Phase 4** - Config Facebook (5 min)
+3. **Phase 2.1 + 2.2** - Auth functions (30 min)
+4. **Phase 2.4** - Status function (10 min)
+5. **Phase 3** - Frontend (20 min)
+6. **Phase 2.3** - Modifier publish pour utiliser la DB (10 min)
+7. **Phase 5** - Token refresh (optionnel)

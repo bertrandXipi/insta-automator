@@ -361,7 +361,9 @@ export default function PostDetailModal({
                     </div>
                      <DatePicker 
                         value={post.date} 
-                        onSave={(newDate) => updateField('date', newDate)} 
+                        onSave={(newDate, dayName, weekNumber) => {
+                          onUpdate({ ...post, date: newDate, day: dayName, week: weekNumber });
+                        }} 
                      />
                 </div>
 
