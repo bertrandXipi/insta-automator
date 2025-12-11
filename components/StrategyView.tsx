@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Post, PostPhase } from '../types';
-import { Calendar, Tag, Hash, ArrowRight, User } from 'lucide-react';
+import { Calendar, User, ArrowRight, Grid3X3, List, Play, Images, CheckCircle } from 'lucide-react';
 
 interface StrategyViewProps {
   posts: Post[];
@@ -8,38 +8,79 @@ interface StrategyViewProps {
 }
 
 export default function StrategyView({ posts, onPostClick }: StrategyViewProps) {
-  
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const phases: PostPhase[] = ['Fêtes', 'Détox'];
 
-  return (
-    <div className="space-y-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        {phases.map((phase, idx) => (
-          <div key={phase} className="bg-white dark:bg-[#252525] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative overflow-hidden group shadow-md dark:shadow-none">
-            <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br opacity-10 rounded-bl-full transition-transform group-hover:scale-110 
-              ${idx === 0 ? 'from-red-600 to-red-900' : 'from-teal-600 to-teal-900'}`} 
-            />
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1 block">Phase {idx + 1}</span>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{phase}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-                {phase === 'Fêtes' ? 'Semaines 1-5' : 'Semaines 6-9'}
-            </p>
+  // Tous les posts triés par date
+  const sortedPosts = [...posts].sort((a, b) => {
+    const [dayA, monthA] = a.date.split('/').map(Number);
+    const [dayB, monthB] = b.date.split('/').map(Number);
+    const yearA = monthA === 12 ? 2025 : 2026;
+    const yearB = monthB === 12 ? 2025 : 2026;
+    return new Date(yearA, monthA - 1, dayA).getTime() - new Date(yearB, monthB - 1, dayB).getTime();
+  });
+
+  const getFormatIcon = (format: string) => {
+    switch (format) {
+      case 'Reel': return <Play size={16} fill="white" />;
+      case 'Carousel': return <Images size={16} />;
+      default: return null;
+    }
+  };
+
+  // Vue Grille Instagram
+  const GridView = () => (
+    <div className="grid grid-cols-3 gap-1 md:gap-2">
+      {sortedPosts.map((post) => (
+        <div
+          key={post.id}
+          onClick={() => onPostClick(post)}
+          className="aspect-square relative cursor-pointer group overflow-hidden bg-gray-100 dark:bg-gray-900"
+        >
+          <img
+            src={post.imageUrl}
+            alt={post.title}
+            className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:opacity-80"
+          />
+          
+          {/* Overlay au hover */}
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <div className="text-white text-center px-2">
+              <p className="text-xs md:text-sm font-bold line-clamp-2">{post.title}</p>
+              <p className="text-[10px] md:text-xs opacity-70 mt-1">{post.date}</p>
+            </div>
           </div>
-        ))}
-      </div>
 
+          {/* Badge format (Reel/Carousel) */}
+          {(post.format === 'Reel' || post.format === 'Carousel') && (
+            <div className="absolute top-2 right-2 text-white drop-shadow-lg">
+              {getFormatIcon(post.format)}
+            </div>
+          )}
+
+          {/* Badge Client */}
+          {post.isClientManaged && (
+            <div className="absolute top-2 left-2 bg-jdl-gold text-black rounded-full p-1 shadow-lg">
+              <User size={10} />
+            </div>
+          )}
+
+          {/* Badge Publié */}
+          {post.published && (
+            <div className="absolute bottom-2 right-2">
+              <CheckCircle size={16} className="text-green-500 drop-shadow-lg" fill="rgba(255,255,255,0.8)" />
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
+  // Vue Liste détaillée (ancienne vue)
+  const ListView = () => (
+    <div className="space-y-12">
       {phases.map((phase) => {
-        // Affichage de tous les posts de la phase, triés par date
-        const phasePosts = posts
-            .filter(p => p.phase === phase)
-            .sort((a, b) => {
-                const [dayA, monthA] = a.date.split('/').map(Number);
-                const [dayB, monthB] = b.date.split('/').map(Number);
-                const yearA = monthA === 12 ? 2025 : 2026;
-                const yearB = monthB === 12 ? 2025 : 2026;
-                return new Date(yearA, monthA - 1, dayA).getTime() - new Date(yearB, monthB - 1, dayB).getTime();
-            });
-
+        const phasePosts = sortedPosts.filter(p => p.phase === phase);
         if (phasePosts.length === 0) return null;
 
         return (
@@ -113,6 +154,71 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
           </div>
         );
       })}
+    </div>
+  );
+
+  return (
+    <div className="space-y-6">
+      {/* Header avec toggle de vue */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Feed Preview</h1>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{sortedPosts.length} posts</span>
+        </div>
+        
+        {/* Toggle Vue */}
+        <div className="flex items-center bg-gray-100 dark:bg-[#252525] rounded-lg p-1 border border-gray-200 dark:border-gray-700">
+          <button
+            onClick={() => setViewMode('grid')}
+            className={`p-2 rounded-md transition-all ${
+              viewMode === 'grid' 
+                ? 'bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white shadow-sm' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+            title="Vue grille Instagram"
+          >
+            <Grid3X3 size={18} />
+          </button>
+          <button
+            onClick={() => setViewMode('list')}
+            className={`p-2 rounded-md transition-all ${
+              viewMode === 'list' 
+                ? 'bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-white shadow-sm' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+            title="Vue liste détaillée"
+          >
+            <List size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Phases summary (only in grid mode) */}
+      {viewMode === 'grid' && (
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          {phases.map((phase, idx) => {
+            const count = sortedPosts.filter(p => p.phase === phase).length;
+            return (
+              <div 
+                key={phase} 
+                className={`p-4 rounded-xl border ${
+                  idx === 0 
+                    ? 'bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-900/30' 
+                    : 'bg-teal-50 dark:bg-teal-900/10 border-teal-200 dark:border-teal-900/30'
+                }`}
+              >
+                <span className={`text-xs font-bold uppercase tracking-widest ${idx === 0 ? 'text-red-600 dark:text-jdl-red' : 'text-teal-600 dark:text-jdl-teal'}`}>
+                  Phase {idx + 1} • {phase}
+                </span>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{count} posts</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Contenu */}
+      {viewMode === 'grid' ? <GridView /> : <ListView />}
     </div>
   );
 }
