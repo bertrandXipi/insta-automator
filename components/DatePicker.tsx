@@ -3,8 +3,26 @@ import { ChevronLeft, ChevronRight, Calendar, Check, Loader2 } from 'lucide-reac
 
 interface DatePickerProps {
   value: string; // Format "DD/MM"
-  onSave: (date: string) => void;
+  onSave: (date: string, dayName: string, weekNumber: number) => void;
 }
+
+// Mapping des jours en français
+const DAYS_FULL = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+// Calcule le numéro de semaine (1-9) basé sur la stratégie
+// Semaine 1 = 01/12 au 07/12, Semaine 2 = 08/12 au 14/12, etc.
+const getWeekNumber = (day: number, month: number, year: number): number => {
+  const targetDate = new Date(year, month, day);
+  // Le lundi de la semaine 1 est le 1er décembre 2025
+  const strategyStart = new Date(2025, 11, 1); // 1er décembre 2025
+  
+  const diffTime = targetDate.getTime() - strategyStart.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const weekNum = Math.floor(diffDays / 7) + 1;
+  
+  // Limiter entre 1 et 9
+  return Math.max(1, Math.min(9, weekNum));
+};
 
 const MONTHS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 const DAYS_SHORT = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
@@ -50,7 +68,14 @@ export default function DatePicker({ value, onSave }: DatePickerProps) {
     if (newDate !== value) {
       setStatus('saving');
       await new Promise(r => setTimeout(r, 400));
-      onSave(newDate);
+      
+      // Calculer le jour de la semaine et le numéro de semaine
+      const year = viewMonth >= 11 ? currentYear : currentYear + 1; // Décembre = année courante, sinon année suivante
+      const dateObj = new Date(year, viewMonth, selectedDay);
+      const dayName = DAYS_FULL[dateObj.getDay()];
+      const weekNumber = getWeekNumber(selectedDay, viewMonth, year);
+      
+      onSave(newDate, dayName, weekNumber);
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 2000);
     }

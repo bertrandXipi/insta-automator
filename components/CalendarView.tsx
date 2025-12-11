@@ -66,57 +66,64 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
 
               {/* Days Columns */}
               {days.map(day => {
-                const post = posts.find(p => p.week === week && p.day === day);
+                const dayPosts = posts.filter(p => p.week === week && p.day === day);
                 
                 return (
                   <div key={`${week}-${day}`} className="col-span-1 relative group">
                     <div className="absolute inset-0 border border-dashed border-gray-200 dark:border-gray-800 rounded-lg pointer-events-none"></div>
                     
-                    {post ? (
-                      <div 
-                        onClick={() => onPostClick(post)}
-                        className={`h-full w-full rounded-lg p-3 border cursor-pointer hover:ring-2 hover:ring-opacity-100 transition-all flex flex-col justify-between group/card relative 
-                        ${getFormatColor(post)} 
-                        ${post.isClientManaged ? 'hover:ring-yellow-400 dark:hover:ring-jdl-gold' : 'hover:ring-red-400 dark:hover:ring-jdl-red'}
-                        `}
-                      >
-                         {/* Client Badge */}
-                         {post.isClientManaged && (
-                           <div className="absolute -top-2 -left-2 z-20 bg-jdl-gold text-black rounded-full p-1 shadow-lg border border-yellow-600 dark:border-yellow-900" title="Post Client">
-                             <User size={10} />
-                           </div>
-                         )}
-
-                         {/* Checkbox Status */}
-                         <div 
-                            className="absolute top-2 right-2 z-20 opacity-0 group-hover/card:opacity-100 transition-opacity"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onTogglePublish(post.id);
-                            }}
-                         >
-                             {post.published ? (
-                                 <CheckCircle size={18} className="text-green-500 fill-green-100 dark:fill-green-900/50" />
-                             ) : (
-                                 <Circle size={18} className={`hover:text-gray-900 dark:hover:text-white ${post.isClientManaged ? 'text-yellow-600 dark:text-jdl-gold' : 'text-gray-400'}`} />
+                    {dayPosts.length > 0 ? (
+                      <div className={`h-full w-full flex flex-col ${dayPosts.length > 1 ? 'gap-1 p-1' : ''}`}>
+                        {dayPosts.map((post, idx) => (
+                          <div 
+                            key={post.id}
+                            onClick={() => onPostClick(post)}
+                            className={`${dayPosts.length > 1 ? 'flex-1 min-h-0' : 'h-full'} w-full rounded-lg ${dayPosts.length > 1 ? 'p-2' : 'p-3'} border cursor-pointer hover:ring-2 hover:ring-opacity-100 transition-all flex flex-col justify-between group/card relative 
+                            ${getFormatColor(post)} 
+                            ${post.isClientManaged ? 'hover:ring-yellow-400 dark:hover:ring-jdl-gold' : 'hover:ring-red-400 dark:hover:ring-jdl-red'}
+                            `}
+                          >
+                             {/* Client Badge */}
+                             {post.isClientManaged && (
+                               <div className="absolute -top-1 -left-1 z-20 bg-jdl-gold text-black rounded-full p-0.5 shadow-lg border border-yellow-600 dark:border-yellow-900" title="Post Client">
+                                 <User size={8} />
+                               </div>
                              )}
-                         </div>
-                         
-                         {/* Always visible checkmark if published */}
-                         {post.published && (
-                             <div className="absolute top-2 right-2 z-10">
-                                 <CheckCircle size={18} className="text-green-500 fill-green-100 dark:fill-green-900/50" />
-                             </div>
-                         )}
 
-                         <div className="flex justify-between items-start pr-4">
-                             <div className={`opacity-80 ${post.published ? 'text-gray-500 dark:text-gray-600' : ''}`}>{getFormatIcon(post.format)}</div>
-                             <span className="text-[10px] font-bold opacity-50">{post.date}</span>
-                         </div>
-                         <div>
-                             <p className={`text-[10px] uppercase tracking-wide opacity-70 mb-1 line-clamp-1 ${post.published ? 'text-gray-500 dark:text-gray-600' : ''}`}>{post.theme}</p>
-                             <p className={`text-xs font-semibold leading-tight line-clamp-3 ${post.published ? 'text-gray-400 dark:text-gray-500 line-through decoration-gray-400 dark:decoration-gray-700' : ''}`}>{post.title}</p>
-                         </div>
+                             {/* Checkbox Status */}
+                             <div 
+                                className="absolute top-1 right-1 z-20 opacity-0 group-hover/card:opacity-100 transition-opacity"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onTogglePublish(post.id);
+                                }}
+                             >
+                                 {post.published ? (
+                                     <CheckCircle size={dayPosts.length > 1 ? 14 : 18} className="text-green-500 fill-green-100 dark:fill-green-900/50" />
+                                 ) : (
+                                     <Circle size={dayPosts.length > 1 ? 14 : 18} className={`hover:text-gray-900 dark:hover:text-white ${post.isClientManaged ? 'text-yellow-600 dark:text-jdl-gold' : 'text-gray-400'}`} />
+                                 )}
+                             </div>
+                             
+                             {/* Always visible checkmark if published */}
+                             {post.published && (
+                                 <div className="absolute top-1 right-1 z-10">
+                                     <CheckCircle size={dayPosts.length > 1 ? 14 : 18} className="text-green-500 fill-green-100 dark:fill-green-900/50" />
+                                 </div>
+                             )}
+
+                             <div className="flex justify-between items-start pr-4">
+                                 <div className={`opacity-80 ${post.published ? 'text-gray-500 dark:text-gray-600' : ''}`}>{getFormatIcon(post.format)}</div>
+                                 <span className={`${dayPosts.length > 1 ? 'text-[8px]' : 'text-[10px]'} font-bold opacity-50`}>{post.date}</span>
+                             </div>
+                             <div>
+                                 {dayPosts.length === 1 && (
+                                   <p className={`text-[10px] uppercase tracking-wide opacity-70 mb-1 line-clamp-1 ${post.published ? 'text-gray-500 dark:text-gray-600' : ''}`}>{post.theme}</p>
+                                 )}
+                                 <p className={`${dayPosts.length > 1 ? 'text-[10px] line-clamp-2' : 'text-xs line-clamp-3'} font-semibold leading-tight ${post.published ? 'text-gray-400 dark:text-gray-500 line-through decoration-gray-400 dark:decoration-gray-700' : ''}`}>{post.title}</p>
+                             </div>
+                          </div>
+                        ))}
                       </div>
                     ) : (
                       <div className="h-full w-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
