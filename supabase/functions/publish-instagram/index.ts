@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
-// Fix: Declare Deno to avoid TypeScript errors when Deno types are not loaded globally
 declare const Deno: any;
 
 const corsHeaders = {
@@ -9,29 +9,63 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-  // 1. Gestion des CORS (Cross-Origin Resource Sharing) pour autoriser l'app Web à appeler cette fonction
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    // 2. Récupération des données envoyées par l'App React
-    const { postId, imageUrl, caption } = await req.json()
+    const { postId, imageUrl, caption, userId } = await req.json()
 
-    // 3. Récupération sécurisée des Clés API (Stockées dans Supabase > Settings > Edge Functions)
-    // NE JAMAIS METTRE CES CLES EN DUR DANS LE CODE
-    const IG_USER_ID = Deno.env.get('IG_USER_ID')
-    const ACCESS_TOKEN = Deno.env.get('IG_ACCESS_TOKEN')
+    let IG_USER_ID: string
+    let ACCESS_TOKEN: string
 
-    if (!IG_USER_ID || !ACCESS_TOKEN) {
-       throw new Error("Configuration Serveur manquante : IG_USER_ID ou IG_ACCESS_TOKEN non définis.")
+    // Si userId fourni, essayer de récupérer les credentials depuis la DB
+    let foundInDb = false
+    if (userId) {
+      const SUPABASE_URL = Deno.env.get('SUPABASE_URL')
+      const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+      
+      const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_KEY!)
+      
+      const { data, error } = await supabase
+        .from('instagram_accounts')
+        .select('ig_user_id, access_token, token_expires_at')
+        .eq('user_id', userId)
+        .single()
+
+      if (!error && data) {
+        // Vérifier si le token est expiré
+        if (data.token_expires_at && new Date(data.token_expires_at) < new Date()) {
+          console.log('Token DB expiré, fallback sur env vars')
+        } else {
+          IG_USER_ID = data.ig_user_id
+          ACCESS_TOKEN = data.access_token
+          foundInDb = true
+          console.log(`Using credentials from DB for user ${userId}`)
+        }
+      }
+    }
+    
+    // Fallback: utiliser les variables d'environnement
+    if (!foundInDb) {
+      IG_USER_ID = Deno.env.get('INSTAGRAM_USER_ID')?.trim()
+      ACCESS_TOKEN = Deno.env.get('INSTAGRAM_TOKEN')?.trim()
+
+      if (!IG_USER_ID || !ACCESS_TOKEN) {
+        throw new Error("Configuration Serveur manquante : INSTAGRAM_USER_ID ou INSTAGRAM_TOKEN non définis.")
+      }
+      
+      console.log(`Using credentials from env vars (fallback)`)
+      console.log(`IG_USER_ID: ${IG_USER_ID}`)
+      console.log(`ACCESS_TOKEN starts with: ${ACCESS_TOKEN?.substring(0, 20)}...`)
+      console.log(`ACCESS_TOKEN ends with: ...${ACCESS_TOKEN?.substring(ACCESS_TOKEN.length - 20)}`)
+      console.log(`ACCESS_TOKEN length: ${ACCESS_TOKEN?.length}`)
     }
 
     console.log(`Tentative de publication pour le post ${postId}...`)
 
-    // 4. Étape A : Création du conteneur média sur Instagram
-    // L'URL de l'image doit être publique et accessible par les serveurs de Facebook
-    const containerUrl = `https://graph.facebook.com/v18.0/${IG_USER_ID}/media`
+    // Étape A : Création du conteneur média sur Instagram
+    const containerUrl = `https://graph.facebook.com/v21.0/${IG_USER_ID}/media`
     const containerParams = new URLSearchParams({
         image_url: imageUrl,
         caption: caption,
@@ -49,8 +83,12 @@ serve(async (req) => {
     const creationId = containerData.id
     console.log(`Conteneur créé avec succès : ${creationId}`)
 
-    // 5. Étape B : Publication effective du conteneur
-    const publishUrl = `https://graph.facebook.com/v18.0/${IG_USER_ID}/media_publish`
+    // Attendre que le média soit prêt (Instagram a besoin de temps pour traiter l'image)
+    console.log('Attente du traitement de l\'image par Instagram...')
+    await new Promise(resolve => setTimeout(resolve, 5000)) // 5 secondes
+
+    // Étape B : Publication effective du conteneur
+    const publishUrl = `https://graph.facebook.com/v21.0/${IG_USER_ID}/media_publish`
     const publishParams = new URLSearchParams({
         creation_id: creationId,
         access_token: ACCESS_TOKEN
@@ -66,14 +104,12 @@ serve(async (req) => {
 
     console.log(`Post publié avec succès ! ID: ${publishData.id}`)
 
-    // 6. Réponse succès à l'application React
     return new Response(
       JSON.stringify({ success: true, instagram_post_id: publishData.id }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
 
   } catch (error: any) {
-    // Gestion des erreurs
     return new Response(
       JSON.stringify({ success: false, error: error.message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }

@@ -33,3 +33,10 @@ export interface NavItem {
   label: string;
   icon: React.ComponentType<any>;
 }
+
+export interface InstagramAccount {
+  connected: boolean;
+  username?: string;
+  expiresAt?: string;
+  isExpired?: boolean;
+}

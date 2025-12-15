@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Post } from '../types';
+import { Post, InstagramAccount } from '../types';
 import { STRATEGY_POSTS } from '../constants';
 
 // =================================================================================
@@ -193,7 +193,7 @@ export const database = {
   },
 
   // --- NOUVEAU : Appel Backend Réel ---
-  async publishToInstagram(post: Post): Promise<{ success: boolean; message?: string }> {
+  async publishToInstagram(post: Post, userId: string = 'default-user'): Promise<{ success: boolean; message?: string }> {
     // Vérification préventive : Instagram refuse le Base64
     if (post.imageUrl.startsWith('data:')) {
         return { 
@@ -210,7 +210,8 @@ export const database = {
                 body: { 
                     postId: post.id,
                     imageUrl: post.imageUrl,
-                    caption: `${post.caption}\n\n${post.hashtags.join(' ')}`
+                    caption: `${post.caption}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
+                    userId
                 }
             });
 
@@ -292,5 +293,62 @@ export const database = {
   // Méthode interne privée
   saveToLocalStorage(posts: Post[]) {
     localStorage.setItem(DB_KEY, JSON.stringify(posts));
+  },
+
+  // ==================== INSTAGRAM OAUTH ====================
+
+  // Récupérer le statut de connexion Instagram
+  async getInstagramStatus(userId: string): Promise<InstagramAccount> {
+    if (USE_SUPABASE && supabase) {
+      try {
+        const { data, error } = await supabase.functions.invoke('instagram-status', {
+          body: { userId }
+        });
+
+        if (error) throw error;
+        return data as InstagramAccount;
+      } catch (e) {
+        console.error("Erreur getInstagramStatus:", e);
+        return { connected: false };
+      }
+    }
+    return { connected: false };
+  },
+
+  // Initier le flow OAuth Instagram
+  async initiateInstagramAuth(userId: string): Promise<string | null> {
+    if (USE_SUPABASE && supabase) {
+      try {
+        const { data, error } = await supabase.functions.invoke('instagram-auth', {
+          body: { userId }
+        });
+
+        if (error) throw error;
+        if (data?.authUrl) {
+          return data.authUrl;
+        }
+      } catch (e) {
+        console.error("Erreur initiateInstagramAuth:", e);
+      }
+    }
+    return null;
+  },
+
+  // Déconnecter le compte Instagram
+  async disconnectInstagram(userId: string): Promise<boolean> {
+    if (USE_SUPABASE && supabase) {
+      try {
+        const { error } = await supabase
+          .from('instagram_accounts')
+          .delete()
+          .eq('user_id', userId);
+
+        if (error) throw error;
+        return true;
+      } catch (e) {
+        console.error("Erreur disconnectInstagram:", e);
+      }
+    }
+    return false;
   }
 };

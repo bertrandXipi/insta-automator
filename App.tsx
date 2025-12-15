@@ -13,7 +13,7 @@ import {
   Moon,
   Instagram
 } from 'lucide-react';
-import { NavItem, Post } from './types';
+import { NavItem, Post, InstagramAccount } from './types';
 import StrategyView from './components/StrategyView';
 import CalendarView from './components/CalendarView';
 import AssetLibrary from './components/AssetLibrary';
@@ -44,6 +44,13 @@ export default function App() {
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'offline'>('connected');
   const [providerName, setProviderName] = useState('Local Storage');
   
+  // Instagram OAuth State
+  const [instagramAccount, setInstagramAccount] = useState<InstagramAccount | null>(null);
+  const [isConnectingInstagram, setIsConnectingInstagram] = useState(false);
+  
+  // User ID (pour l'instant on utilise un ID fixe, à remplacer par auth plus tard)
+  const USER_ID = 'default-user';
+  
   // Initial Load & Realtime Subscription
   useEffect(() => {
     // Check local storage for theme preference
@@ -54,6 +61,7 @@ export default function App() {
 
     loadData();
     setProviderName(database.getProviderName());
+    loadInstagramStatus();
 
     const unsubscribe = database.subscribeToChanges((updatedPost) => {
       setPosts(currentPosts => 
@@ -101,6 +109,48 @@ export default function App() {
       setConnectionStatus('offline');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loadInstagramStatus = async () => {
+    const status = await database.getInstagramStatus(USER_ID);
+    setInstagramAccount(status);
+    
+    // Vérifier les paramètres URL après callback OAuth
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('instagram_connected') === 'true') {
+      // Recharger le statut après connexion réussie
+      const newStatus = await database.getInstagramStatus(USER_ID);
+      setInstagramAccount(newStatus);
+      // Nettoyer l'URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+    if (urlParams.get('instagram_error')) {
+      console.error('Instagram OAuth error:', urlParams.get('instagram_error'));
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  };
+
+  const handleConnectInstagram = async () => {
+    setIsConnectingInstagram(true);
+    try {
+      const authUrl = await database.initiateInstagramAuth(USER_ID);
+      if (authUrl) {
+        window.location.href = authUrl;
+      }
+    } catch (e) {
+      console.error('Erreur connexion Instagram:', e);
+    } finally {
+      setIsConnectingInstagram(false);
+    }
+  };
+
+  const handleDisconnectInstagram = async () => {
+    if (confirm('Voulez-vous vraiment déconnecter votre compte Instagram ?')) {
+      const success = await database.disconnectInstagram(USER_ID);
+      if (success) {
+        setInstagramAccount({ connected: false });
+      }
     }
   };
 
@@ -237,13 +287,34 @@ export default function App() {
             <div className="mb-4 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg p-3 border border-gray-200 dark:border-gray-800 space-y-3">
                
                {/* Instagram Status */}
-               <div className="flex items-center justify-between">
-                 <div className="flex items-center space-x-2">
-                    <Instagram size={14} className="text-pink-600" />
-                    <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Compte lié</span>
+               {instagramAccount?.connected ? (
+                 <div className="space-y-2">
+                   <div className="flex items-center justify-between">
+                     <div className="flex items-center space-x-2">
+                        <Instagram size={14} className="text-pink-600" />
+                        <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+                          @{instagramAccount.username || 'Compte lié'}
+                        </span>
+                     </div>
+                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                   </div>
+                   <button
+                     onClick={handleDisconnectInstagram}
+                     className="text-[10px] text-gray-400 hover:text-red-500 transition-colors"
+                   >
+                     Déconnecter
+                   </button>
                  </div>
-                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-               </div>
+               ) : (
+                 <button
+                   onClick={handleConnectInstagram}
+                   disabled={isConnectingInstagram}
+                   className="w-full py-2 px-3 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:opacity-90 transition-opacity flex items-center justify-center space-x-2 disabled:opacity-50"
+                 >
+                   <Instagram size={14} />
+                   <span>{isConnectingInstagram ? 'Connexion...' : 'Connecter Instagram'}</span>
+                 </button>
+               )}
                
                <div className="h-px bg-gray-200 dark:bg-gray-700"></div>
 
