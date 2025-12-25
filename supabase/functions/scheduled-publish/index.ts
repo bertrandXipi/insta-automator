@@ -150,11 +150,13 @@ async function callPublishInstagram(
     body: JSON.stringify({
       postId: post.id,
       imageUrl: post.imageUrl,
-      caption: fullCaption
+      caption: fullCaption,
+      userId: 'default-user' // Use token from instagram_accounts table
     })
   });
 
   const result = await response.json();
+  console.log('publish-instagram response:', JSON.stringify(result));
   return result;
 }
 
