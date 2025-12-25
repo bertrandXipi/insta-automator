@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Post } from '../types';
-import { X, Copy, Image, Hash, MessageCircle, Send, CheckCircle, ChevronLeft, ChevronRight, User, Loader2, Upload, Download, Save, Check, Instagram, Wifi, AlertTriangle, Maximize2 } from 'lucide-react';
+import { X, Copy, Image, Hash, MessageCircle, Send, CheckCircle, ChevronLeft, ChevronRight, User, Loader2, Upload, Download, Save, Check, Instagram, Wifi, AlertTriangle, Maximize2, Plus, Trash2 } from 'lucide-react';
 import { database } from '../services/database';
 import DatePicker from './DatePicker';
 
@@ -106,6 +106,23 @@ export default function PostDetailModal({
     const [isPublishingToInsta, setIsPublishingToInsta] = useState(false);
     const [publishError, setPublishError] = useState<string | null>(null);
     const [isZoomed, setIsZoomed] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    
+    // Get all images (combine imageUrl and imageUrls for backward compatibility)
+    const getAllImages = (): string[] => {
+        const images: string[] = [];
+        if (post.imageUrl) images.push(post.imageUrl);
+        if (post.imageUrls && post.imageUrls.length > 0) {
+            post.imageUrls.forEach(url => {
+                if (!images.includes(url)) images.push(url);
+            });
+        }
+        return images.length > 0 ? images : [''];
+    };
+    
+    const allImages = getAllImages();
+    const hasMultipleImages = allImages.length > 1;
+    const currentImage = allImages[currentImageIndex] || '';
 
     // Keyboard Navigation
     useEffect(() => {
@@ -130,13 +147,35 @@ export default function PostDetailModal({
         onUpdate({ ...post, [field]: value });
     };
 
-    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, replaceIndex?: number) => {
         if (e.target.files && e.target.files[0]) {
             setIsUploading(true);
             try {
-                // Utilisation du service centralisé qui gère Storage ou Base64 fallback
                 const imageUrl = await database.uploadImage(e.target.files[0]);
-                updateField('imageUrl', imageUrl);
+                
+                if (replaceIndex !== undefined) {
+                    // Replace existing image at index
+                    const newImages = [...allImages];
+                    newImages[replaceIndex] = imageUrl;
+                    
+                    // Update both imageUrl (first) and imageUrls (rest)
+                    const updatedPost = {
+                        ...post,
+                        imageUrl: newImages[0],
+                        imageUrls: newImages.length > 1 ? newImages.slice(1) : undefined
+                    };
+                    onUpdate(updatedPost);
+                } else {
+                    // Add new image
+                    const newImages = [...allImages.filter(img => img !== ''), imageUrl];
+                    const updatedPost = {
+                        ...post,
+                        imageUrl: newImages[0],
+                        imageUrls: newImages.length > 1 ? newImages.slice(1) : undefined
+                    };
+                    onUpdate(updatedPost);
+                    setCurrentImageIndex(newImages.length - 1);
+                }
             } catch (err) {
                 console.error("Failed to upload image", err);
                 alert("Erreur lors du chargement de l'image.");
@@ -145,17 +184,37 @@ export default function PostDetailModal({
             }
         }
     };
+    
+    const handleRemoveImage = (index: number) => {
+        const newImages = allImages.filter((_, i) => i !== index);
+        if (newImages.length === 0) {
+            onUpdate({ ...post, imageUrl: '', imageUrls: undefined });
+            setCurrentImageIndex(0);
+        } else {
+            onUpdate({
+                ...post,
+                imageUrl: newImages[0],
+                imageUrls: newImages.length > 1 ? newImages.slice(1) : undefined
+            });
+            setCurrentImageIndex(Math.min(currentImageIndex, newImages.length - 1));
+        }
+    };
+    
+    const handleAddImage = () => {
+        fileInputRef.current?.click();
+    };
 
     const handleDownloadImage = async () => {
+        if (!currentImage) return;
         try {
-            let downloadUrl = post.imageUrl;
+            let downloadUrl = currentImage;
             let shouldRevoke = false;
 
             // Si c'est une URL externe (pas base64), on la fetch en blob pour forcer le téléchargement
             // et éviter l'ouverture dans un nouvel onglet
-            if (!post.imageUrl.startsWith('data:')) {
+            if (!currentImage.startsWith('data:')) {
                 setIsUploading(true); // Indicateur visuel pendant le fetch
-                const response = await fetch(post.imageUrl);
+                const response = await fetch(currentImage);
                 const blob = await response.blob();
                 downloadUrl = window.URL.createObjectURL(blob);
                 shouldRevoke = true;
@@ -163,7 +222,7 @@ export default function PostDetailModal({
 
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.download = `jean-de-luz-post-${post.id}.jpg`;
+            link.download = `jean-de-luz-post-${post.id}-${currentImageIndex + 1}.jpg`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -174,7 +233,7 @@ export default function PostDetailModal({
         } catch (error) {
             console.error('Erreur téléchargement, fallback classique:', error);
             // Fallback simple si le fetch échoue (CORS strict par exemple)
-            window.open(post.imageUrl, '_blank');
+            window.open(currentImage, '_blank');
         } finally {
             setIsUploading(false);
         }
@@ -254,14 +313,60 @@ export default function PostDetailModal({
         {/* Left: Visual Preview & Image Management */}
         <div 
             className="w-full md:w-5/12 bg-gray-100 dark:bg-black relative flex items-center justify-center group h-64 md:h-auto shrink-0 mt-6 md:mt-0 overflow-hidden cursor-zoom-in"
-            onClick={() => setIsZoomed(true)}
+            onClick={() => currentImage && setIsZoomed(true)}
         >
             {/* Image display */}
-            <img 
-                src={post.imageUrl} 
-                alt={post.title} 
-                className={`w-full h-full object-cover transition-opacity duration-300 ${isUploading ? 'opacity-50 blur-sm' : 'opacity-90'}`}
-            />
+            {currentImage ? (
+                <img 
+                    src={currentImage} 
+                    alt={post.title} 
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${isUploading ? 'opacity-50 blur-sm' : 'opacity-90'}`}
+                />
+            ) : (
+                <div className="flex flex-col items-center justify-center text-gray-400 dark:text-gray-600">
+                    <Image size={48} className="mb-2" />
+                    <span className="text-sm">Aucune image</span>
+                </div>
+            )}
+            
+            {/* Carousel Navigation */}
+            {hasMultipleImages && (
+                <>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i => Math.max(0, i - 1)); }}
+                        className={`absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full z-30 transition-opacity ${currentImageIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'opacity-100'}`}
+                        disabled={currentImageIndex === 0}
+                    >
+                        <ChevronLeft size={20} />
+                    </button>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i => Math.min(allImages.length - 1, i + 1)); }}
+                        className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full z-30 transition-opacity ${currentImageIndex === allImages.length - 1 ? 'opacity-30 cursor-not-allowed' : 'opacity-100'}`}
+                        disabled={currentImageIndex === allImages.length - 1}
+                    >
+                        <ChevronRight size={20} />
+                    </button>
+                    
+                    {/* Dots indicator */}
+                    <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
+                        {allImages.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
+                                className={`w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/70'}`}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
+            
+            {/* Image count badge */}
+            {allImages.filter(img => img).length > 0 && (
+                <div className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full z-20 flex items-center space-x-1">
+                    <Image size={12} />
+                    <span>{currentImageIndex + 1}/{allImages.filter(img => img).length}</span>
+                </div>
+            )}
             
             {/* Loading Spinner */}
             {isUploading && (
@@ -275,39 +380,69 @@ export default function PostDetailModal({
                 <input 
                     type="file" 
                     ref={fileInputRef}
-                    onChange={handleImageUpload}
+                    onChange={(e) => handleImageUpload(e)}
                     className="hidden" 
                     accept="image/*"
                 />
                 
                 <div 
                     className="flex flex-col space-y-3"
-                    onClick={(e) => e.stopPropagation()} // Empêche le zoom quand on clique sur les boutons
+                    onClick={(e) => e.stopPropagation()}
                 >
+                    {/* Replace current image */}
                     <button 
-                        onClick={() => fileInputRef.current?.click()}
+                        onClick={() => {
+                            const input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = 'image/*';
+                            input.onchange = (e) => handleImageUpload(e as any, currentImageIndex);
+                            input.click();
+                        }}
                         className="flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-full font-bold hover:bg-gray-200 transition-transform hover:scale-105 shadow-lg w-full justify-center"
                     >
                         <Upload size={18} />
                         <span>Changer l'image</span>
                     </button>
+                    
+                    {/* Add new image */}
+                    <button 
+                        onClick={handleAddImage}
+                        className="flex items-center space-x-2 bg-jdl-blue text-white px-4 py-2 rounded-full font-bold hover:bg-blue-700 transition-transform hover:scale-105 shadow-lg w-full justify-center"
+                    >
+                        <Plus size={18} />
+                        <span>Ajouter une image</span>
+                    </button>
 
                     <div className="flex space-x-2">
                         <button 
                             onClick={handleDownloadImage}
-                            className="flex-1 flex items-center justify-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full font-medium hover:bg-black border border-white/20 transition-transform hover:scale-105"
+                            disabled={!currentImage}
+                            className="flex-1 flex items-center justify-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full font-medium hover:bg-black border border-white/20 transition-transform hover:scale-105 disabled:opacity-50"
                         >
                             <Download size={18} />
                             <span>DL</span>
                         </button>
                         
-                        <button 
-                            onClick={() => setIsZoomed(true)}
-                            className="flex-1 flex items-center justify-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full font-medium hover:bg-black border border-white/20 transition-transform hover:scale-105"
-                        >
-                            <Maximize2 size={18} />
-                            <span>Zoom</span>
-                        </button>
+                        {currentImage && (
+                            <button 
+                                onClick={() => setIsZoomed(true)}
+                                className="flex-1 flex items-center justify-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full font-medium hover:bg-black border border-white/20 transition-transform hover:scale-105"
+                            >
+                                <Maximize2 size={18} />
+                                <span>Zoom</span>
+                            </button>
+                        )}
+                        
+                        {/* Delete current image */}
+                        {currentImage && (
+                            <button 
+                                onClick={() => handleRemoveImage(currentImageIndex)}
+                                className="flex items-center justify-center bg-red-500/80 text-white px-3 py-2 rounded-full font-medium hover:bg-red-600 border border-red-400/20 transition-transform hover:scale-105"
+                                title="Supprimer cette image"
+                            >
+                                <Trash2 size={18} />
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -514,7 +649,7 @@ export default function PostDetailModal({
       </div>
 
       {/* FULL SCREEN IMAGE ZOOM MODAL */}
-      {isZoomed && (
+      {isZoomed && currentImage && (
           <div 
             className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center animate-in fade-in duration-200"
             onClick={() => setIsZoomed(false)}
@@ -526,8 +661,33 @@ export default function PostDetailModal({
                   <X size={32} />
               </button>
               
+              {/* Carousel navigation in zoom mode */}
+              {hasMultipleImages && (
+                  <>
+                      <button
+                          onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i => Math.max(0, i - 1)); }}
+                          className={`absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-opacity ${currentImageIndex === 0 ? 'opacity-30' : 'opacity-100'}`}
+                          disabled={currentImageIndex === 0}
+                      >
+                          <ChevronLeft size={32} />
+                      </button>
+                      <button
+                          onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i => Math.min(allImages.length - 1, i + 1)); }}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-opacity ${currentImageIndex === allImages.length - 1 ? 'opacity-30' : 'opacity-100'}`}
+                          disabled={currentImageIndex === allImages.length - 1}
+                      >
+                          <ChevronRight size={32} />
+                      </button>
+                      
+                      {/* Image counter */}
+                      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full">
+                          {currentImageIndex + 1} / {allImages.length}
+                      </div>
+                  </>
+              )}
+              
               <img 
-                src={post.imageUrl} 
+                src={currentImage} 
                 alt={post.title}
                 className="max-h-screen max-w-screen object-contain p-4 shadow-2xl"
                 onClick={(e) => e.stopPropagation()} // Prevent close when clicking image

@@ -18,6 +18,7 @@ export interface Post {
   visualPrompt: string;
   phase: PostPhase;
   imageUrl: string;
+  imageUrls?: string[]; // Multiple images for carousel posts
   published: boolean;
   isClientManaged?: boolean; // New flag for posts managed by the client
 }

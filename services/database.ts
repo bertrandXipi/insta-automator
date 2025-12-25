@@ -201,6 +201,14 @@ export const database = {
             message: "Impossible de publier une image locale (Base64). Veuillez ré-uploader l'image pour qu'elle soit hébergée sur Supabase Storage." 
         };
     }
+    
+    // Check additional images for base64
+    if (post.imageUrls && post.imageUrls.some(url => url.startsWith('data:'))) {
+        return { 
+            success: false, 
+            message: "Une ou plusieurs images sont en Base64. Veuillez ré-uploader toutes les images." 
+        };
+    }
 
     if (USE_SUPABASE && supabase) {
         try {
@@ -210,6 +218,7 @@ export const database = {
                 body: { 
                     postId: post.id,
                     imageUrl: post.imageUrl,
+                    imageUrls: post.imageUrls, // Pass additional images for carousel
                     caption: `${post.caption}\n\n${post.cta}\n\n${post.hashtags.join(' ')}`,
                     userId
                 }

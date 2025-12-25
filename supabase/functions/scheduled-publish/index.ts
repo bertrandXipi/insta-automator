@@ -14,6 +14,7 @@ interface Post {
   date: string;
   caption: string;
   imageUrl: string;
+  imageUrls?: string[]; // Multiple images for carousel
   published: boolean;
   isClientManaged?: boolean;
   hashtags: string[];
@@ -52,6 +53,11 @@ function validatePost(post: Post): ValidationResult {
   // Check imageUrl exists and is not base64
   if (!post.imageUrl || post.imageUrl.startsWith('data:')) {
     return { valid: false, reason: 'Invalid or missing imageUrl (base64 not allowed)' };
+  }
+  
+  // Check additional images for base64
+  if (post.imageUrls && post.imageUrls.some(url => url.startsWith('data:'))) {
+    return { valid: false, reason: 'One or more additional images are base64 (not allowed)' };
   }
   
   // Check caption is not empty
@@ -150,6 +156,7 @@ async function callPublishInstagram(
     body: JSON.stringify({
       postId: post.id,
       imageUrl: post.imageUrl,
+      imageUrls: post.imageUrls, // Pass additional images for carousel
       caption: fullCaption,
       userId: 'default-user' // Use token from instagram_accounts table
     })
