@@ -11,7 +11,8 @@ import {
   HardDrive,
   Sun,
   Moon,
-  Instagram
+  Instagram,
+  BarChart3
 } from 'lucide-react';
 import { NavItem, Post, InstagramAccount } from './types';
 import StrategyView from './components/StrategyView';
@@ -19,11 +20,13 @@ import CalendarView from './components/CalendarView';
 import AssetLibrary from './components/AssetLibrary';
 import PostDetailModal from './components/PostDetailModal';
 import HomeView from './components/HomeView';
+import StatisticsView from './components/StatisticsView';
 import { database } from './services/database';
 import { APP_VERSION } from './constants';
 
 const NAV_ITEMS: NavItem[] = [
   { id: 'home', label: 'Accueil', icon: Home },
+  { id: 'statistics', label: 'Bilan & Performance', icon: BarChart3 },
   { id: 'strategy', label: 'Vue Détaillée', icon: LayoutGrid },
   { id: 'calendar', label: 'Calendrier Éditorial', icon: CalendarIcon },
   { id: 'assets', label: 'Bibliothèque Visuelle', icon: ImageIcon },
@@ -231,6 +234,8 @@ export default function App() {
     switch (currentView) {
       case 'home':
         return <HomeView posts={posts} onPostClick={setSelectedPost} />;
+      case 'statistics':
+        return <StatisticsView />;
       case 'strategy':
         return <StrategyView onPostClick={setSelectedPost} posts={posts} />;
       case 'calendar':
