@@ -25,8 +25,8 @@ import {
 
 // Données extraites du rapport
 const STATS_DATA = {
-  period: 'Novembre 2025 – Janvier 2026',
-  duration: '90 jours',
+  period: 'Décembre 2025 – Janvier 2026',
+  duration: '60 jours',
   followers: 4023,
   
   visibility: {
@@ -177,7 +177,7 @@ export default function StatisticsView() {
           icon={Eye} 
           label="Vues totales" 
           value={STATS_DATA.visibility.totalViews.toLocaleString()}
-          subValue="sur 90 jours"
+          subValue="sur 60 jours"
           color="blue"
         />
         <StatCard 
@@ -412,7 +412,7 @@ export default function StatisticsView() {
       </div>
 
       {/* Diagnostic & Recommandations */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Points forts */}
         <div className="bg-white dark:bg-[#1a1a1a] rounded-xl p-6 border border-gray-200 dark:border-[#252525] shadow-sm">
@@ -441,11 +441,38 @@ export default function StatisticsView() {
           </ul>
         </div>
 
+        {/* Points faibles */}
+        <div className="bg-white dark:bg-[#1a1a1a] rounded-xl p-6 border border-gray-200 dark:border-[#252525] shadow-sm">
+          <h3 className="text-sm font-bold text-red-600 dark:text-red-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+            <AlertTriangle size={16} />
+            Points à améliorer
+          </h3>
+          
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-red-500 mt-0.5">!</span>
+              <span><span className="font-medium text-gray-900 dark:text-white">Dépendance abonnés</span> : Peu de nouvelles personnes touchées (33%)</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-red-500 mt-0.5">!</span>
+              <span><span className="font-medium text-gray-900 dark:text-white">Reels absents</span> : Seulement 3,4% des vues, levier sous-exploité</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-red-500 mt-0.5">!</span>
+              <span><span className="font-medium text-gray-900 dark:text-white">Contenu statique</span> : Trop de "bocaux fermés", pas assez de vie</span>
+            </li>
+            <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-red-500 mt-0.5">!</span>
+              <span><span className="font-medium text-gray-900 dark:text-white">Traçabilité</span> : Pas de code promo pour mesurer les ventes</span>
+            </li>
+          </ul>
+        </div>
+
         {/* Opportunités */}
         <div className="bg-white dark:bg-[#1a1a1a] rounded-xl p-6 border border-gray-200 dark:border-[#252525] shadow-sm">
           <h3 className="text-sm font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest mb-6 flex items-center gap-2">
             <Lightbulb size={16} />
-            Opportunités de croissance
+            Opportunités
           </h3>
           
           <ul className="space-y-3">
@@ -463,7 +490,7 @@ export default function StatisticsView() {
             </li>
             <li className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
               <span className="text-orange-500 mt-0.5">→</span>
-              <span><span className="font-medium text-gray-900 dark:text-white">Contenu "vivant"</span> : Montrer le produit ouvert, pas juste le bocal fermé</span>
+              <span><span className="font-medium text-gray-900 dark:text-white">Contenu "vivant"</span> : Dégustations, recettes, moments de partage</span>
             </li>
           </ul>
         </div>
