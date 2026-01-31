@@ -215,5 +215,6 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
         </div>
       </div>
     </div>
+    </div>
   );
 }
