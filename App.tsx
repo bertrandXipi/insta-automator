@@ -379,17 +379,6 @@ export default function App() {
           </div>
           
           <div className="flex items-center space-x-4">
-             <div className="hidden md:flex items-center space-x-6 mr-6 border-r border-gray-200 dark:border-gray-800 pr-6">
-                <div className="text-center">
-                    <span className="block text-xs text-gray-500 uppercase tracking-wider font-bold">Objectif</span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">30 Posts</span>
-                </div>
-                 <div className="text-center">
-                    <span className="block text-xs text-gray-500 uppercase tracking-wider font-bold">Durée</span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">8 Semaines</span>
-                </div>
-             </div>
-
              {/* Connection Status Badge */}
              <div 
                className="hidden lg:flex items-center space-x-2 bg-gray-100 dark:bg-[#1a1a1a] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-800 mr-2 cursor-help"
