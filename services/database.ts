@@ -66,6 +66,9 @@ export const database = {
   // Récupérer tous les posts
   async getAllPosts(): Promise<Post[]> {
     if (USE_SUPABASE && supabase) {
+      // D'abord, synchroniser les nouveaux posts depuis constants.ts
+      await this.syncNewPosts();
+      
       const { data, error } = await supabase
         .from('posts')
         .select('content');
@@ -296,6 +299,39 @@ export const database = {
         
       if (error) console.error("Erreur seeding:", error);
       else console.log("Base de données initialisée avec succès !");
+    }
+  },
+
+  // Forcer la synchronisation des posts depuis constants.ts vers Supabase
+  // Utile quand on ajoute de nouveaux posts dans le code
+  async syncNewPosts() {
+    if (USE_SUPABASE && supabase) {
+      // Récupérer les posts existants dans Supabase
+      const { data: existingData } = await supabase
+        .from('posts')
+        .select('id');
+      
+      const existingIds = new Set(existingData?.map(row => row.id) || []);
+      
+      // Trouver les nouveaux posts qui ne sont pas encore dans Supabase
+      const newPosts = STRATEGY_POSTS.filter(post => !existingIds.has(post.id));
+      
+      if (newPosts.length > 0) {
+        console.log(`Ajout de ${newPosts.length} nouveaux posts...`);
+        const rows = newPosts.map(post => ({
+          id: post.id,
+          content: post
+        }));
+        
+        const { error } = await supabase
+          .from('posts')
+          .upsert(rows);
+          
+        if (error) console.error("Erreur sync:", error);
+        else console.log(`${newPosts.length} nouveaux posts ajoutés !`);
+      } else {
+        console.log("Tous les posts sont déjà synchronisés.");
+      }
     }
   },
 

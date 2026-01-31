@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Post } from '../types';
-import { Instagram, Video, Camera, Images, CheckCircle, Circle, User } from 'lucide-react';
+import { Instagram, Video, Camera, Images, CheckCircle, Circle, User, Filter } from 'lucide-react';
 
 interface CalendarViewProps {
   posts: Post[];
@@ -8,10 +8,27 @@ interface CalendarViewProps {
   onTogglePublish: (postId: string) => void;
 }
 
+type MonthFilter = 'all' | 'dec' | 'jan' | 'feb' | 'mar';
+
 export default function CalendarView({ posts, onPostClick, onTogglePublish }: CalendarViewProps) {
-  // We have 9 weeks to cover until Jan 31
-  const weeks = Array.from({ length: 9 }, (_, i) => i + 1);
+  const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
+  
+  // We have 18 weeks to cover Dec 2025 - Mar 2026
+  const allWeeks = Array.from({ length: 18 }, (_, i) => i + 1);
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+  // Filtrer les semaines selon le mois sélectionné
+  const getWeeksForMonth = (filter: MonthFilter): number[] => {
+    switch (filter) {
+      case 'dec': return [1, 2, 3, 4, 5]; // Semaines 1-5 = Décembre
+      case 'jan': return [5, 6, 7, 8, 9]; // Semaines 5-9 = Janvier
+      case 'feb': return [10, 11, 12, 13]; // Semaines 10-13 = Février
+      case 'mar': return [14, 15, 16, 17, 18]; // Semaines 14-18 = Mars
+      default: return allWeeks;
+    }
+  };
+
+  const weeks = getWeeksForMonth(monthFilter);
 
   const getFormatIcon = (format: string) => {
     switch (format) {
@@ -41,7 +58,67 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
   }
 
   return (
-    <div className="overflow-x-auto pb-4">
+    <div className="space-y-6">
+      {/* Filtre par mois */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setMonthFilter('all')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'all' 
+              ? 'bg-gray-900 dark:bg-white text-white dark:text-black' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <Filter size={14} />
+          <span>Tous ({posts.length})</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('dec')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'dec' 
+              ? 'bg-jdl-red text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-jdl-red"></span>
+          <span>Décembre</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('jan')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'jan' 
+              ? 'bg-jdl-teal text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-jdl-teal"></span>
+          <span>Janvier</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('feb')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'feb' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Février</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('mar')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'mar' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Mars</span>
+        </button>
+      </div>
+
+      <div className="overflow-x-auto pb-4">
       <div className="min-w-[1000px]">
         {/* Header Days */}
         <div className="grid grid-cols-8 gap-4 mb-6 sticky top-0 bg-gray-50 dark:bg-[#121212] z-10 py-2 transition-colors duration-300">
@@ -59,8 +136,8 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
               {/* Week Number Column */}
               <div className="col-span-1 flex flex-col justify-center border-r border-gray-200 dark:border-gray-800 pr-4">
                 <span className="text-3xl font-bold text-gray-400 dark:text-gray-700">0{week}</span>
-                <span className={`text-xs uppercase font-bold mt-1 ${week <= 5 ? 'text-red-500 dark:text-jdl-red' : 'text-teal-600 dark:text-jdl-teal'}`}>
-                   {week <= 5 ? 'Fêtes' : 'Détox'}
+                <span className={`text-xs uppercase font-bold mt-1 ${week <= 5 ? 'text-red-500 dark:text-jdl-red' : week <= 9 ? 'text-teal-600 dark:text-jdl-teal' : 'text-green-600 dark:text-green-400'}`}>
+                   {week <= 5 ? 'Fêtes' : week <= 9 ? 'Détox' : 'Printemps'}
                 </span>
               </div>
 
