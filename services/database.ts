@@ -66,8 +66,9 @@ export const database = {
   // Récupérer tous les posts
   async getAllPosts(): Promise<Post[]> {
     if (USE_SUPABASE && supabase) {
-      // D'abord, synchroniser les nouveaux posts depuis constants.ts
-      await this.syncNewPosts();
+      // Forcer la mise à jour de tous les posts depuis constants.ts
+      // Cela préserve le statut "published" mais met à jour tout le reste
+      await this.forceUpdateAllPosts();
       
       const { data, error } = await supabase
         .from('posts')
@@ -333,6 +334,48 @@ export const database = {
         console.log("Tous les posts sont déjà synchronisés.");
       }
     }
+  },
+
+  // Forcer la mise à jour de TOUS les posts depuis constants.ts
+  // Écrase le contenu existant dans Supabase (sauf published status)
+  async forceUpdateAllPosts() {
+    if (USE_SUPABASE && supabase) {
+      console.log("Mise à jour forcée de tous les posts...");
+      
+      // Récupérer les statuts published actuels pour les préserver
+      const { data: existingData } = await supabase
+        .from('posts')
+        .select('id, content');
+      
+      const publishedStatus = new Map<string, boolean>();
+      existingData?.forEach(row => {
+        if (row.content && typeof row.content.published === 'boolean') {
+          publishedStatus.set(row.id, row.content.published);
+        }
+      });
+      
+      // Préparer tous les posts avec le statut published préservé
+      const rows = STRATEGY_POSTS.map(post => ({
+        id: post.id,
+        content: {
+          ...post,
+          published: publishedStatus.get(post.id) ?? post.published
+        }
+      }));
+      
+      const { error } = await supabase
+        .from('posts')
+        .upsert(rows);
+        
+      if (error) {
+        console.error("Erreur forceUpdate:", error);
+        return false;
+      }
+      
+      console.log(`${rows.length} posts mis à jour avec succès !`);
+      return true;
+    }
+    return false;
   },
 
   // Méthode interne privée
