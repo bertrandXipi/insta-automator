@@ -30,6 +30,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'strategy', label: 'Vue Détaillée', icon: LayoutGrid },
   { id: 'calendar', label: 'Calendrier Éditorial', icon: CalendarIcon },
   { id: 'assets', label: 'Bibliothèque Visuelle', icon: ImageIcon },
+  { id: 'statistics', label: 'Bilan & Stats', icon: BarChart3 },
 ];
 
 export default function App() {
@@ -242,6 +243,8 @@ export default function App() {
         return <CalendarView onPostClick={setSelectedPost} posts={posts} onTogglePublish={handleTogglePublish} />;
       case 'assets':
         return <AssetLibrary />;
+      case 'statistics':
+        return <StatisticsView />;
       default:
         return <HomeView posts={posts} onPostClick={setSelectedPost} />;
     }

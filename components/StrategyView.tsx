@@ -1,23 +1,40 @@
 import React, { useState } from 'react';
 import { Post, PostPhase } from '../types';
-import { Calendar, User, ArrowRight, Grid3X3, List, Play, Images, CheckCircle } from 'lucide-react';
+import { Calendar, User, ArrowRight, Grid3X3, List, Play, Images, CheckCircle, Filter } from 'lucide-react';
 
 interface StrategyViewProps {
   posts: Post[];
   onPostClick: (post: Post) => void;
 }
 
+type MonthFilter = 'all' | 'dec' | 'jan' | 'feb' | 'mar';
+
 export default function StrategyView({ posts, onPostClick }: StrategyViewProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const phases: PostPhase[] = ['Fêtes', 'Détox'];
+  const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
+  const phases: PostPhase[] = ['Fêtes', 'Détox', 'Printemps'];
 
   // Tous les posts triés par date
   const sortedPosts = [...posts].sort((a, b) => {
     const [dayA, monthA] = a.date.split('/').map(Number);
     const [dayB, monthB] = b.date.split('/').map(Number);
+    // Décembre 2025, Janvier-Mars 2026
     const yearA = monthA === 12 ? 2025 : 2026;
     const yearB = monthB === 12 ? 2025 : 2026;
     return new Date(yearA, monthA - 1, dayA).getTime() - new Date(yearB, monthB - 1, dayB).getTime();
+  });
+
+  // Filtrer par mois
+  const filteredPosts = sortedPosts.filter(post => {
+    if (monthFilter === 'all') return true;
+    const month = parseInt(post.date.split('/')[1]);
+    switch (monthFilter) {
+      case 'dec': return month === 12;
+      case 'jan': return month === 1;
+      case 'feb': return month === 2;
+      case 'mar': return month === 3;
+      default: return true;
+    }
   });
 
   const getFormatIcon = (format: string) => {
@@ -31,7 +48,7 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
   // Vue Grille Instagram
   const GridView = () => (
     <div className="grid grid-cols-3 gap-1 md:gap-2">
-      {sortedPosts.map((post) => (
+      {filteredPosts.map((post) => (
         <div
           key={post.id}
           onClick={() => onPostClick(post)}
@@ -80,7 +97,7 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
   const ListView = () => (
     <div className="space-y-12">
       {phases.map((phase) => {
-        const phasePosts = sortedPosts.filter(p => p.phase === phase);
+        const phasePosts = filteredPosts.filter(p => p.phase === phase);
         if (phasePosts.length === 0) return null;
 
         return (
@@ -160,10 +177,10 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
   return (
     <div className="space-y-6">
       {/* Header avec toggle de vue */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Feed Preview</h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400">{sortedPosts.length} posts</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{filteredPosts.length} posts</span>
         </div>
         
         {/* Toggle Vue */}
@@ -191,6 +208,65 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
             <List size={18} />
           </button>
         </div>
+      </div>
+
+      {/* Filtre par mois */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setMonthFilter('all')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'all' 
+              ? 'bg-gray-900 dark:bg-white text-white dark:text-black' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <Filter size={14} />
+          <span>Tous ({sortedPosts.length})</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('dec')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'dec' 
+              ? 'bg-jdl-red text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-jdl-red"></span>
+          <span>Décembre</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('jan')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'jan' 
+              ? 'bg-jdl-teal text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-jdl-teal"></span>
+          <span>Janvier</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('feb')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'feb' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Février</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('mar')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'mar' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Mars</span>
+        </button>
       </div>
 
       {/* Phases summary (only in grid mode) */}

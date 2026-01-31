@@ -503,5 +503,323 @@ export const STRATEGY_POSTS: Post[] = [
     "visualPrompt": "Visuel graphique récapitulatif mois janvier.",
     "imageUrl": "https://picsum.photos/id/1057/800/1200",
     "published": false
+  },
+
+  // ============================================
+  // FÉVRIER 2026 - Phase Printemps
+  // ============================================
+
+  // --- WEEK 10 (02/02 - 08/02) ---
+  {
+    id: 'p31', week: 10, day: 'Lundi', date: '02/02',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "[PLACEHOLDER] Produit Février 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1001/800/800",
+    published: false
+  },
+  {
+    id: 'p32', week: 10, day: 'Mercredi', date: '04/02',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "[PLACEHOLDER] Recette Février 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1002/800/1200",
+    published: false
+  },
+  {
+    id: 'c7', week: 10, day: 'Vendredi', date: '06/02',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Reel',
+    title: "[CLIENT] Post Entreprise Février 1",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client.",
+    hashtags: ["#JeanDeLuz", "#Coulisses"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1003/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 11 (09/02 - 15/02) ---
+  {
+    id: 'p33', week: 11, day: 'Mardi', date: '10/02',
+    phase: 'Printemps', theme: 'Brand', format: 'Carousel',
+    title: "[PLACEHOLDER] Brand Février 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1004/800/800",
+    published: false
+  },
+  {
+    id: 'p34', week: 11, day: 'Jeudi', date: '12/02',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "[PLACEHOLDER] Produit Février 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1005/800/800",
+    published: false
+  },
+  {
+    id: 'p35', week: 11, day: 'Samedi', date: '14/02',
+    phase: 'Printemps', theme: 'Event', format: 'Photo',
+    title: "[PLACEHOLDER] Saint-Valentin",
+    caption: "Contenu à définir. 📝\n\nPost spécial Saint-Valentin à personnaliser.",
+    hashtags: ["#SaintValentin", "#JeanDeLuz", "#Amour"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel Saint-Valentin à définir",
+    imageUrl: "https://picsum.photos/id/1006/800/800",
+    published: false
+  },
+
+  // --- WEEK 12 (16/02 - 22/02) ---
+  {
+    id: 'p36', week: 12, day: 'Lundi', date: '16/02',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "[PLACEHOLDER] Recette Février 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1008/800/1200",
+    published: false
+  },
+  {
+    id: 'c8', week: 12, day: 'Mercredi', date: '18/02',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Post Entreprise Février 2",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client.",
+    hashtags: ["#JeanDeLuz", "#Coulisses"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1009/800/800",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p37', week: 12, day: 'Vendredi', date: '20/02',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "[PLACEHOLDER] Lifestyle Février 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1010/800/800",
+    published: false
+  },
+
+  // --- WEEK 13 (23/02 - 01/03) ---
+  {
+    id: 'p38', week: 13, day: 'Mardi', date: '24/02',
+    phase: 'Printemps', theme: 'Produit', format: 'Carousel',
+    title: "[PLACEHOLDER] Produit Février 3",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1011/800/800",
+    published: false
+  },
+  {
+    id: 'p39', week: 13, day: 'Jeudi', date: '26/02',
+    phase: 'Printemps', theme: 'Recette', format: 'Photo',
+    title: "[PLACEHOLDER] Recette Février 3",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie février.",
+    hashtags: ["#JeanDeLuz", "#Février", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1012/800/800",
+    published: false
+  },
+  {
+    id: 'c9', week: 13, day: 'Samedi', date: '28/02',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Post Entreprise Février 3",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client - Bilan février.",
+    hashtags: ["#JeanDeLuz", "#Bilan", "#Février"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1013/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // ============================================
+  // MARS 2026 - Phase Printemps
+  // ============================================
+
+  // --- WEEK 14 (02/03 - 08/03) ---
+  {
+    id: 'p40', week: 14, day: 'Lundi', date: '02/03',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "[PLACEHOLDER] Produit Mars 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1015/800/800",
+    published: false
+  },
+  {
+    id: 'p41', week: 14, day: 'Mercredi', date: '04/03',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "[PLACEHOLDER] Recette Mars 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1016/800/1200",
+    published: false
+  },
+  {
+    id: 'c10', week: 14, day: 'Vendredi', date: '06/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Reel',
+    title: "[CLIENT] Post Entreprise Mars 1",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client.",
+    hashtags: ["#JeanDeLuz", "#Coulisses"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1018/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 15 (09/03 - 15/03) ---
+  {
+    id: 'p42', week: 15, day: 'Mardi', date: '10/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Carousel',
+    title: "[PLACEHOLDER] Brand Mars 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1019/800/800",
+    published: false
+  },
+  {
+    id: 'p43', week: 15, day: 'Jeudi', date: '12/03',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "[PLACEHOLDER] Produit Mars 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1020/800/800",
+    published: false
+  },
+  {
+    id: 'p44', week: 15, day: 'Samedi', date: '14/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "[PLACEHOLDER] Lifestyle Mars 1",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1021/800/800",
+    published: false
+  },
+
+  // --- WEEK 16 (16/03 - 22/03) ---
+  {
+    id: 'p45', week: 16, day: 'Lundi', date: '16/03',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "[PLACEHOLDER] Recette Mars 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1022/800/1200",
+    published: false
+  },
+  {
+    id: 'c11', week: 16, day: 'Mercredi', date: '18/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Post Entreprise Mars 2",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client.",
+    hashtags: ["#JeanDeLuz", "#Coulisses"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1023/800/800",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p46', week: 16, day: 'Vendredi', date: '20/03',
+    phase: 'Printemps', theme: 'Event', format: 'Photo',
+    title: "[PLACEHOLDER] Équinoxe Printemps",
+    caption: "Contenu à définir. 📝\n\nPost spécial premier jour du printemps.",
+    hashtags: ["#Printemps", "#JeanDeLuz", "#Saison"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel printemps à définir",
+    imageUrl: "https://picsum.photos/id/1024/800/800",
+    published: false
+  },
+
+  // --- WEEK 17 (23/03 - 29/03) ---
+  {
+    id: 'p47', week: 17, day: 'Mardi', date: '24/03',
+    phase: 'Printemps', theme: 'Produit', format: 'Carousel',
+    title: "[PLACEHOLDER] Produit Mars 3",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1025/800/800",
+    published: false
+  },
+  {
+    id: 'p48', week: 17, day: 'Jeudi', date: '26/03',
+    phase: 'Printemps', theme: 'Recette', format: 'Photo',
+    title: "[PLACEHOLDER] Recette Mars 3",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1027/800/800",
+    published: false
+  },
+  {
+    id: 'p49', week: 17, day: 'Samedi', date: '28/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[PLACEHOLDER] Brand Mars 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1028/800/800",
+    published: false
+  },
+
+  // --- WEEK 18 (30/03 - 31/03) ---
+  {
+    id: 'p50', week: 18, day: 'Lundi', date: '30/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "[PLACEHOLDER] Lifestyle Mars 2",
+    caption: "Contenu à définir. 📝\n\nCe post sera remplacé par le contenu définitif de la stratégie mars.",
+    hashtags: ["#JeanDeLuz", "#Mars", "#Placeholder"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à définir",
+    imageUrl: "https://picsum.photos/id/1029/800/800",
+    published: false
+  },
+  {
+    id: 'c12', week: 18, day: 'Mardi', date: '31/03',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Bilan Mars",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPost géré par le client - Bilan mars.",
+    hashtags: ["#JeanDeLuz", "#Bilan", "#Mars"],
+    cta: "CTA à définir",
+    visualPrompt: "Visuel à fournir par l'équipe (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1031/800/1200",
+    published: false,
+    isClientManaged: true
   }
 ];

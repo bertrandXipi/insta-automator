@@ -2,7 +2,7 @@
 import React from 'react';
 
 export type PostFormat = 'Carousel' | 'Reel' | 'Photo' | 'Story';
-export type PostPhase = 'Fêtes' | 'Détox';
+export type PostPhase = 'Fêtes' | 'Détox' | 'Printemps';
 
 export interface Post {
   id: string;
