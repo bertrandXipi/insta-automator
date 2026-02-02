@@ -66,9 +66,8 @@ export const database = {
   // Récupérer tous les posts
   async getAllPosts(): Promise<Post[]> {
     if (USE_SUPABASE && supabase) {
-      // Forcer la mise à jour de tous les posts depuis constants.ts
-      // Cela préserve le statut "published" mais met à jour tout le reste
-      await this.forceUpdateAllPosts();
+      // Synchroniser uniquement les NOUVEAUX posts (ne pas écraser l'existant)
+      await this.syncNewPosts();
       
       const { data, error } = await supabase
         .from('posts')
