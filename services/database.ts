@@ -324,12 +324,18 @@ export const database = {
           content: post
         }));
         
+        // SÉCURITÉ : Utiliser INSERT pour éviter tout écrasement
         const { error } = await supabase
           .from('posts')
-          .insert(rows); // INSERT au lieu de UPSERT pour éviter l'écrasement
+          .insert(rows, { onConflict: 'id' }); // Si conflit, on ignore (pas d'écrasement)
           
         if (error) {
-          console.error("❌ Erreur sync:", error);
+          // Si erreur de conflit, c'est normal (post existe déjà)
+          if (error.code === '23505') {
+            console.log("⚠️ Certains posts existent déjà (ignorés)");
+          } else {
+            console.error("❌ Erreur sync:", error);
+          }
         } else {
           console.log(`✅ ${newPosts.length} nouveaux posts ajoutés !`);
         }
@@ -337,49 +343,6 @@ export const database = {
         console.log("✅ Tous les posts sont déjà synchronisés.");
       }
     }
-  },
-
-  // ⚠️ FONCTION DANGEREUSE - À UTILISER AVEC PRÉCAUTION
-  // Écrase TOUS les posts avec le contenu de constants.ts
-  // NE JAMAIS APPELER AUTOMATIQUEMENT
-  async forceUpdateAllPosts() {
-    if (USE_SUPABASE && supabase) {
-      console.warn("⚠️ ATTENTION : Mise à jour forcée de tous les posts...");
-      
-      // Récupérer les statuts published actuels pour les préserver
-      const { data: existingData } = await supabase
-        .from('posts')
-        .select('id, content');
-      
-      const publishedStatus = new Map<string, boolean>();
-      existingData?.forEach(row => {
-        if (row.content && typeof row.content.published === 'boolean') {
-          publishedStatus.set(row.id, row.content.published);
-        }
-      });
-      
-      // Préparer tous les posts avec le statut published préservé
-      const rows = STRATEGY_POSTS.map(post => ({
-        id: post.id,
-        content: {
-          ...post,
-          published: publishedStatus.get(post.id) ?? post.published
-        }
-      }));
-      
-      const { error } = await supabase
-        .from('posts')
-        .upsert(rows);
-        
-      if (error) {
-        console.error("❌ Erreur forceUpdate:", error);
-        return false;
-      }
-      
-      console.log(`✅ ${rows.length} posts mis à jour avec succès !`);
-      return true;
-    }
-    return false;
   },
 
   // Méthode interne privée
