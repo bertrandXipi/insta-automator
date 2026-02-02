@@ -12,8 +12,7 @@ import {
   Sun,
   Moon,
   Instagram,
-  BarChart3,
-  AlertTriangle
+  BarChart3
 } from 'lucide-react';
 import { NavItem, Post, InstagramAccount } from './types';
 import StrategyView from './components/StrategyView';
@@ -22,7 +21,6 @@ import AssetLibrary from './components/AssetLibrary';
 import PostDetailModal from './components/PostDetailModal';
 import HomeView from './components/HomeView';
 import StatisticsView from './components/StatisticsView';
-import ImageDiagnostic from './components/ImageDiagnostic';
 import { database } from './services/database';
 import { APP_VERSION } from './constants';
 
@@ -53,9 +51,6 @@ export default function App() {
   // Instagram OAuth State
   const [instagramAccount, setInstagramAccount] = useState<InstagramAccount | null>(null);
   const [isConnectingInstagram, setIsConnectingInstagram] = useState(false);
-  
-  // Image Diagnostic State
-  const [showImageDiagnostic, setShowImageDiagnostic] = useState(false);
   
   // User ID (pour l'instant on utilise un ID fixe, à remplacer par auth plus tard)
   const USER_ID = 'default-user';
@@ -410,16 +405,6 @@ export default function App() {
                 )}
              </div>
 
-            {/* Diagnostic Button */}
-            <button 
-              onClick={() => setShowImageDiagnostic(true)}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center space-x-2 shadow-sm"
-              title="Diagnostic des images"
-            >
-              <AlertTriangle size={16} />
-              <span className="hidden sm:inline">Diagnostic Images</span>
-            </button>
-
             <button className="bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2 shadow-sm">
               <PlusCircle size={16} />
               <span className="hidden sm:inline">Nouveau Post</span>
@@ -450,11 +435,6 @@ export default function App() {
             hasNext={hasNext}
             hasPrev={hasPrev}
         />
-      )}
-
-      {/* Image Diagnostic Modal */}
-      {showImageDiagnostic && (
-        <ImageDiagnostic onClose={() => setShowImageDiagnostic(false)} />
       )}
     </div>
   );
