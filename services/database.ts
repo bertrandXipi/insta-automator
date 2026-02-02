@@ -303,7 +303,7 @@ export const database = {
   },
 
   // Forcer la synchronisation des posts depuis constants.ts vers Supabase
-  // Utile quand on ajoute de nouveaux posts dans le code
+  // ATTENTION : N'ajoute QUE les nouveaux posts, ne touche JAMAIS aux posts existants
   async syncNewPosts() {
     if (USE_SUPABASE && supabase) {
       // Récupérer les posts existants dans Supabase
@@ -317,7 +317,7 @@ export const database = {
       const newPosts = STRATEGY_POSTS.filter(post => !existingIds.has(post.id));
       
       if (newPosts.length > 0) {
-        console.log(`Ajout de ${newPosts.length} nouveaux posts...`);
+        console.log(`✅ Ajout de ${newPosts.length} nouveaux posts...`);
         const rows = newPosts.map(post => ({
           id: post.id,
           content: post
@@ -325,21 +325,25 @@ export const database = {
         
         const { error } = await supabase
           .from('posts')
-          .upsert(rows);
+          .insert(rows); // INSERT au lieu de UPSERT pour éviter l'écrasement
           
-        if (error) console.error("Erreur sync:", error);
-        else console.log(`${newPosts.length} nouveaux posts ajoutés !`);
+        if (error) {
+          console.error("❌ Erreur sync:", error);
+        } else {
+          console.log(`✅ ${newPosts.length} nouveaux posts ajoutés !`);
+        }
       } else {
-        console.log("Tous les posts sont déjà synchronisés.");
+        console.log("✅ Tous les posts sont déjà synchronisés.");
       }
     }
   },
 
-  // Forcer la mise à jour de TOUS les posts depuis constants.ts
-  // Écrase le contenu existant dans Supabase (sauf published status)
+  // ⚠️ FONCTION DANGEREUSE - À UTILISER AVEC PRÉCAUTION
+  // Écrase TOUS les posts avec le contenu de constants.ts
+  // NE JAMAIS APPELER AUTOMATIQUEMENT
   async forceUpdateAllPosts() {
     if (USE_SUPABASE && supabase) {
-      console.log("Mise à jour forcée de tous les posts...");
+      console.warn("⚠️ ATTENTION : Mise à jour forcée de tous les posts...");
       
       // Récupérer les statuts published actuels pour les préserver
       const { data: existingData } = await supabase
@@ -367,11 +371,11 @@ export const database = {
         .upsert(rows);
         
       if (error) {
-        console.error("Erreur forceUpdate:", error);
+        console.error("❌ Erreur forceUpdate:", error);
         return false;
       }
       
-      console.log(`${rows.length} posts mis à jour avec succès !`);
+      console.log(`✅ ${rows.length} posts mis à jour avec succès !`);
       return true;
     }
     return false;
