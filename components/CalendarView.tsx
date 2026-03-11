@@ -8,20 +8,20 @@ interface CalendarViewProps {
   onTogglePublish: (postId: string) => void;
 }
 
-type MonthFilter = 'all' | 'feb' | 'mar';
+type MonthFilter = 'all' | 'mar' | 'apr';
 
 export default function CalendarView({ posts, onPostClick, onTogglePublish }: CalendarViewProps) {
   const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
   
-  // Weeks 10-18 cover Feb-Mar 2026
-  const allWeeks = Array.from({ length: 9 }, (_, i) => i + 10);
+  // Weeks 15-22 cover Mar 13 - Apr 30 2026
+  const allWeeks = Array.from({ length: 8 }, (_, i) => i + 15);
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
   // Filtrer les semaines selon le mois sélectionné
   const getWeeksForMonth = (filter: MonthFilter): number[] => {
     switch (filter) {
-      case 'feb': return [10, 11, 12, 13]; // Semaines 10-13 = Février
-      case 'mar': return [14, 15, 16, 17, 18]; // Semaines 14-18 = Mars
+      case 'mar': return [15, 16, 17, 18]; // Semaines 15-18 = Mars (à partir du 13)
+      case 'apr': return [18, 19, 20, 21, 22]; // Semaines 18-22 = Avril
       default: return allWeeks;
     }
   };
@@ -71,17 +71,6 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
           <span>Tous ({posts.length})</span>
         </button>
         <button
-          onClick={() => setMonthFilter('feb')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-            monthFilter === 'feb' 
-              ? 'bg-green-500 text-white' 
-              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-green-500"></span>
-          <span>Février</span>
-        </button>
-        <button
           onClick={() => setMonthFilter('mar')}
           className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
             monthFilter === 'mar' 
@@ -91,6 +80,17 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
         >
           <span className="w-2 h-2 rounded-full bg-green-500"></span>
           <span>Mars</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('apr')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'apr' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Avril</span>
         </button>
       </div>
 

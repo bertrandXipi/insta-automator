@@ -170,7 +170,7 @@ export default function StatisticsView() {
           </p>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/20 rounded-full border border-green-200 dark:border-green-900/30">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-xs font-medium text-green-700 dark:text-green-300">Période active : Février – Mars 2026</span>
+            <span className="text-xs font-medium text-green-700 dark:text-green-300">Période active : Mars – Avril 2026</span>
           </div>
         </div>
       </div>

@@ -834,3 +834,356 @@ export const STRATEGY_POSTS: Post[] = [
     isClientManaged: true
   }
 ];
+
+  // ============================================
+  // MARS–AVRIL 2026 - Phase Printemps (à partir du 13/03)
+  // ============================================
+
+  // --- WEEK 15 (13/03 - 15/03) ---
+  {
+    id: 'p44', week: 15, day: 'Samedi', date: '14/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "Marché de St-Jean",
+    caption: "Samedi matin, rituel sacré. 🛒\n\nLe marché de Saint-Jean-de-Luz.\nLes couleurs, les odeurs, les sourires.\n\nC'est ici que tout commence.",
+    hashtags: ["#Marche", "#SaintJeanDeLuz", "#Local", "#PaysBasque", "#Terroir"],
+    cta: "Quel est votre marché préféré ?",
+    visualPrompt: "Ambiance marché, étals colorés, foule, produits frais.",
+    imageUrl: "https://picsum.photos/id/1021/800/800",
+    published: false
+  },
+
+  // --- WEEK 16 (16/03 - 22/03) ---
+  {
+    id: 'p45', week: 16, day: 'Lundi', date: '16/03',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "Wrap Thon Avocat",
+    caption: "Lunch box level 100. 🌯\n\nWrap thon-avocat :\n- Tortilla\n- Avocat écrasé\n- Thon Jean de Luz\n- Crudités\n\nHealthy, rassasiant, délicieux.",
+    hashtags: ["#Wrap", "#Healthy", "#LunchBox", "#MealPrep", "#JeanDeLuz"],
+    cta: "Parfait pour le bureau !",
+    visualPrompt: "Vidéo assemblage : tortilla → avocat écrasé → thon émietté → crudités → roulage → coupe → dégustation.",
+    imageUrl: "https://picsum.photos/id/1022/800/1200",
+    published: false
+  },
+  {
+    id: 'c13', week: 16, day: 'Mercredi', date: '18/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Nouveauté/Actu",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nNouveau produit ou actualité entreprise.",
+    hashtags: ["#JeanDeLuz", "#Nouveaute", "#Actu"],
+    cta: "Qu'en pensez-vous ?",
+    visualPrompt: "Photo nouveau produit ou actualité (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1023/800/800",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p46', week: 16, day: 'Vendredi', date: '20/03',
+    phase: 'Printemps', theme: 'Event', format: 'Photo',
+    title: "Premier Jour du Printemps 🌸",
+    caption: "Le printemps est là. 🌸\n\nPremier jour officiel de la belle saison.\nLa côte basque se réveille doucement.\n\nPrêts pour les apéros en terrasse ?",
+    hashtags: ["#Printemps", "#Spring", "#PaysBasque", "#NouveauDepart", "#JeanDeLuz"],
+    cta: "Qu'attendez-vous le plus du printemps ?",
+    visualPrompt: "Côte basque ensoleillée, fleurs, renouveau, lumière douce.",
+    imageUrl: "https://picsum.photos/id/1024/800/800",
+    published: false
+  },
+  {
+    id: 'c14', week: 16, day: 'Samedi', date: '21/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Reel',
+    title: "[CLIENT] Coulisses Atelier",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nFilmer la préparation des commandes, ambiance travail.",
+    hashtags: ["#JeanDeLuz", "#Coulisses", "#Atelier"],
+    cta: "Vous aimez voir les coulisses ?",
+    visualPrompt: "Vidéo smartphone de l'atelier (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1003/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 17 (23/03 - 29/03) ---
+  {
+    id: 'p36', week: 17, day: 'Lundi', date: '23/03',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "Salade Tiède Sardines",
+    caption: "Healthy mais gourmand. 🥗\n\nSalade tiède aux sardines :\n- Sardines poêlées 2 min\n- Mesclun frais\n- Vinaigrette citron-moutarde\n\nPrêt en 5 minutes, 0 culpabilité.",
+    hashtags: ["#RecetteHealthy", "#Salade", "#Sardines", "#HealthyFood", "#JeanDeLuz"],
+    cta: "La recette complète en bio !",
+    visualPrompt: "Vidéo : sardines dans poêle → salade dans assiette → sardines posées → vinaigrette → dégustation.",
+    imageUrl: "https://picsum.photos/id/1008/800/1200",
+    published: false
+  },
+  {
+    id: 'c15', week: 17, day: 'Mercredi', date: '25/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] L'Équipe",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPortrait équipe ou artisan au travail.",
+    hashtags: ["#JeanDeLuz", "#Equipe", "#Artisan"],
+    cta: "Merci à notre équipe !",
+    visualPrompt: "Photo équipe ou portrait artisan (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1009/800/800",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p42', week: 17, day: 'Jeudi', date: '26/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Carousel',
+    title: "De la Mer à l'Assiette",
+    caption: "7 heures. ⏱️\n\nC'est le temps entre la pêche et la mise en bocal.\nPas de congélation, pas d'intermédiaire.\n\nJuste la mer, nos mains, et votre table.",
+    hashtags: ["#Transparence", "#CircuitCourt", "#Frais", "#Artisanal", "#JeanDeLuz"],
+    cta: "Swipez pour suivre le parcours",
+    visualPrompt: "Carousel 5 slides : 1) Titre sur fond océan 2) Bateau en mer 5h 3) Criée 8h 4) Atelier 10h 5) Table dressée midi.",
+    imageUrl: "https://picsum.photos/id/1019/800/800",
+    published: false
+  },
+  {
+    id: 'p49', week: 17, day: 'Samedi', date: '28/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "Archives : Les Années 60",
+    caption: "1962. 📷\n\nLes quais de Saint-Jean-de-Luz.\nLes bateaux, la criée, l'effervescence.\n\n60 ans plus tard, l'âme est la même.",
+    hashtags: ["#Histoire", "#Vintage", "#Patrimoine", "#Archives", "#JeanDeLuz"],
+    cta: "Aimez-vous ces photos d'époque ?",
+    visualPrompt: "Photo N&B d'archive, port ou conserverie années 60, ambiance nostalgique.",
+    imageUrl: "https://picsum.photos/id/1028/800/800",
+    published: false
+  },
+  {
+    id: 'c16', week: 17, day: 'Dimanche', date: '29/03',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Week-end Basque",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPartage d'un moment week-end, ambiance locale.",
+    hashtags: ["#JeanDeLuz", "#WeekEnd", "#PaysBasque"],
+    cta: "Bon dimanche !",
+    visualPrompt: "Story ambiance week-end, paysage ou moment convivial (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1030/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 18 (30/03 - 05/04) ---
+  {
+    id: 'p40', week: 18, day: 'Lundi', date: '30/03',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "Thon Germon",
+    caption: "Le roi de nos bocaux. 👑\n\nNotre thon germon à l'huile d'olive.\nChair ferme, goût délicat, qualité premium.\n\nLe produit que nos clients rachètent encore et encore.",
+    hashtags: ["#Thon", "#Germon", "#Premium", "#JeanDeLuz", "#PaysBasque"],
+    cta: "L'avez-vous déjà goûté ?",
+    visualPrompt: "Bocal ouvert, morceaux de thon visibles, texture appétissante, lumière naturelle.",
+    imageUrl: "https://picsum.photos/id/1015/800/800",
+    published: false
+  },
+  {
+    id: 'c17', week: 18, day: 'Mercredi', date: '01/04',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Reel',
+    title: "[CLIENT] Arrivage du Jour",
+    caption: "En direct du port ! ⚓️\n\nCe matin, la pêche a été bonne.\nÀ filmer par l'équipe : débarquement poisson au port.",
+    hashtags: ["#JeanDeLuz", "#Port", "#PecheLocale", "#Frais"],
+    cta: "Vous aimez voir les coulisses ?",
+    visualPrompt: "Vidéo smartphone au port le matin, débarquement poisson (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1018/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p38', week: 18, day: 'Jeudi', date: '02/04',
+    phase: 'Printemps', theme: 'Produit', format: 'Carousel',
+    title: "Gamme Terrines",
+    caption: "Une terrine pour chaque occasion. 🍽️\n\nApéro improvisé ? Pique-nique ? Entrée chic ?\nNos terrines s'adaptent à tous vos moments.\n\nDécouvrez la gamme complète en bio.",
+    hashtags: ["#Terrine", "#Apero", "#Gourmandise", "#Gamme", "#JeanDeLuz"],
+    cta: "Votez pour votre préférée en commentaire !",
+    visualPrompt: "Carousel 5 slides : 1) Titre 2-4) Chaque terrine avec accord 5) CTA.",
+    imageUrl: "https://picsum.photos/id/1011/800/800",
+    published: false
+  },
+  {
+    id: 'c18', week: 18, day: 'Samedi', date: '04/04',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Pâques en Préparation",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPréparation des coffrets Pâques, ambiance atelier.",
+    hashtags: ["#JeanDeLuz", "#Paques", "#Preparation"],
+    cta: "Pâques approche !",
+    visualPrompt: "Story préparation coffrets, ambiance atelier festive (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1032/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 19 (06/04 - 12/04) ---
+  {
+    id: 'p47', week: 19, day: 'Mardi', date: '07/04',
+    phase: 'Printemps', theme: 'Produit', format: 'Carousel',
+    title: "Coffret Pâques 🐣",
+    caption: "Pâques approche ! 🐣\n\nNotre coffret spécial pour le repas de famille :\n→ Thon germon\n→ Sardines millésimées\n→ Terrine festive\n→ Rillettes apéritives\n\nLe cadeau qui plaît à coup sûr.\nLien en bio 🎁",
+    hashtags: ["#Paques", "#Coffret", "#Cadeau", "#Famille", "#JeanDeLuz"],
+    cta: "Commandez avant rupture !",
+    visualPrompt: "Carousel : 1) Titre festif 2) Contenu coffret détaillé 3) Idées présentation 4) CTA + lien.",
+    imageUrl: "https://picsum.photos/id/1025/800/800",
+    published: false
+  },
+  {
+    id: 'c19', week: 19, day: 'Mercredi', date: '08/04',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Ambiance Boutique",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nDécoration printanière de la boutique.",
+    hashtags: ["#JeanDeLuz", "#Boutique", "#Printemps"],
+    cta: "Passez nous voir !",
+    visualPrompt: "Photo boutique décorée pour le printemps (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1033/800/800",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p41', week: 19, day: 'Vendredi', date: '10/04',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "Pâtes au Thon 2 min",
+    caption: "Dîner en 10 minutes. ⏰\n\nPâtes + thon + tomates + basilic.\nLa recette du soir quand on a la flemme mais qu'on veut bien manger.",
+    hashtags: ["#RecetteRapide", "#Pates", "#Thon", "#DinnerIdeas", "#JeanDeLuz"],
+    cta: "Sauvegardez pour ce soir !",
+    visualPrompt: "Vidéo ultra-rapide : pâtes qui égouttent → thon dans poêle → tomates → basilic → assiette finale → dégustation.",
+    imageUrl: "https://picsum.photos/id/1016/800/1200",
+    published: false
+  },
+  {
+    id: 'c20', week: 19, day: 'Samedi', date: '11/04',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Veille de Pâques",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nDernières commandes, ambiance veille de fête.",
+    hashtags: ["#JeanDeLuz", "#Paques", "#DerniereMinute"],
+    cta: "Joyeuses Pâques !",
+    visualPrompt: "Story ambiance veille de Pâques, dernières préparations (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1034/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 20 (13/04 - 19/04) ---
+  {
+    id: 'p43', week: 20, day: 'Lundi', date: '13/04',
+    phase: 'Printemps', theme: 'Produit', format: 'Photo',
+    title: "Soupe de Poisson",
+    caption: "Le réconfort en bocal. 🥣\n\nNotre soupe de poisson concentrée.\nVous ajoutez l'eau, on s'occupe du goût.\n\nAvec des croûtons et de la rouille...\nLe bonheur simple.",
+    hashtags: ["#Soupe", "#Poisson", "#Reconfort", "#Printemps", "#JeanDeLuz"],
+    cta: "Avec ou sans fromage râpé ?",
+    visualPrompt: "Bol fumant, croûtons dorés, rouille, cuillère, ambiance cosy.",
+    imageUrl: "https://picsum.photos/id/1020/800/800",
+    published: false
+  },
+  {
+    id: 'c21', week: 20, day: 'Mercredi', date: '15/04',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Reel',
+    title: "[CLIENT] Retour de Pêche",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nFilmer le retour des bateaux au port.",
+    hashtags: ["#JeanDeLuz", "#Port", "#PecheLocale"],
+    cta: "Vous aimez voir les coulisses ?",
+    visualPrompt: "Vidéo smartphone retour de pêche au port (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/196/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p48', week: 20, day: 'Jeudi', date: '16/04',
+    phase: 'Printemps', theme: 'Recette', format: 'Photo',
+    title: "Œufs Mimosa Sardines",
+    caption: "Œufs mimosa revisités. 🥚\n\nLa recette classique avec une twist :\nRemplacez le thon par nos sardines.\n\nRésultat ? Plus de caractère, plus de goût.",
+    hashtags: ["#OeufsMimosa", "#Recette", "#Sardines", "#JeanDeLuz"],
+    cta: "Vous testez ce week-end ?",
+    visualPrompt: "Assiette d'œufs mimosa garnis, présentation soignée, herbes fraîches.",
+    imageUrl: "https://picsum.photos/id/1027/800/800",
+    published: false
+  },
+  {
+    id: 'c22', week: 20, day: 'Samedi', date: '18/04',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Savoir-Faire",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nPhoto ou vidéo d'un geste artisanal en atelier.",
+    hashtags: ["#JeanDeLuz", "#SavoirFaire", "#Artisanat"],
+    cta: "L'artisanat, c'est notre fierté.",
+    visualPrompt: "Photo gros plan geste artisanal, mains au travail (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1035/800/800",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 21 (20/04 - 26/04) ---
+  {
+    id: 'p37', week: 21, day: 'Lundi', date: '20/04',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "Pause Déjeuner Vue Mer",
+    caption: "La pause déj' parfaite. 🌊\n\nQuand le soleil de printemps réchauffe la terrasse...\nUn bocal, du bon pain, et l'océan en fond.\n\nC'est ça, la vie au Pays Basque.",
+    hashtags: ["#PaysBasque", "#PauseDej", "#Ocean", "#Lifestyle", "#JeanDeLuz"],
+    cta: "Où prenez-vous votre pause préférée ?",
+    visualPrompt: "Table en terrasse, produits Jean de Luz, vue mer en arrière-plan, soleil.",
+    imageUrl: "https://picsum.photos/id/1010/800/800",
+    published: false
+  },
+  {
+    id: 'c23', week: 21, day: 'Mercredi', date: '22/04',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Journée de la Terre 🌍",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nEngagement éco-responsable, pêche durable.",
+    hashtags: ["#JeanDeLuz", "#JourneeDeLaTerre", "#PecheDurable"],
+    cta: "Notre engagement pour la planète.",
+    visualPrompt: "Story engagement environnemental, pêche durable (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1036/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p39', week: 21, day: 'Jeudi', date: '23/04',
+    phase: 'Printemps', theme: 'Recette', format: 'Photo',
+    title: "Bruschetta Anchois",
+    caption: "La bruschetta qui fait voyager. 🇮🇹\n\nPain grillé + tomates cerises + anchois + basilic.\nUn classique méditerranéen revisité avec nos anchois.\n\nPrêt en 5 minutes.",
+    hashtags: ["#Bruschetta", "#Anchois", "#Recette", "#Mediterranee", "#JeanDeLuz"],
+    cta: "Enregistrez cette recette !",
+    visualPrompt: "Vue de dessus, 3 bruschettas garnies, couleurs vives, basilic frais.",
+    imageUrl: "https://picsum.photos/id/1012/800/800",
+    published: false
+  },
+  {
+    id: 'p50', week: 21, day: 'Samedi', date: '25/04',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "Terrasse de Printemps",
+    caption: "Les premiers vrais rayons. ☀️\n\nQuand le soleil revient sur les terrasses...\nC'est le signal pour ressortir l'apéro.\n\nQui est prêt ?",
+    hashtags: ["#Terrasse", "#Apero", "#Printemps", "#Soleil", "#JeanDeLuz"],
+    cta: "Premier apéro terrasse de l'année ?",
+    visualPrompt: "Table en terrasse, produits Jean de Luz, soleil couchant, ambiance conviviale.",
+    imageUrl: "https://picsum.photos/id/1029/800/800",
+    published: false
+  },
+  {
+    id: 'c24', week: 21, day: 'Dimanche', date: '26/04',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Story',
+    title: "[CLIENT] Dimanche en Famille",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nMoment convivial, repas en famille avec nos produits.",
+    hashtags: ["#JeanDeLuz", "#Famille", "#Dimanche"],
+    cta: "Bon dimanche !",
+    visualPrompt: "Story moment familial, table dressée (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1037/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+
+  // --- WEEK 22 (27/04 - 30/04) ---
+  {
+    id: 'p35', week: 22, day: 'Lundi', date: '27/04',
+    phase: 'Printemps', theme: 'Produit', format: 'Carousel',
+    title: "Coffret Apéro Printanier",
+    caption: "L'apéro parfait pour les beaux jours. 🌸\n\nNotre coffret spécial printemps :\n→ Rillettes de thon\n→ Sardines millésimées\n→ Terrine de la mer\n\nLe cadeau idéal pour les gourmands.\nLien en bio 🎁",
+    hashtags: ["#Coffret", "#Apero", "#Printemps", "#Cadeau", "#JeanDeLuz"],
+    cta: "Commandez le vôtre !",
+    visualPrompt: "Coffret ouvert, produits bien disposés, ambiance printanière lumineuse.",
+    imageUrl: "https://picsum.photos/id/1006/800/800",
+    published: false
+  },
+  {
+    id: 'c25', week: 22, day: 'Mercredi', date: '29/04',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Bilan Avril",
+    caption: "Au revoir Avril ! 👋\n\nRécap du mois + teaser mai.\nÀ fournir par l'équipe.",
+    hashtags: ["#JeanDeLuz", "#Bilan", "#Avril", "#Recap"],
+    cta: "Vivement mai !",
+    visualPrompt: "Story récap du mois, remerciements, teaser mai (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1031/800/1200",
+    published: false,
+    isClientManaged: true
+  }
+];

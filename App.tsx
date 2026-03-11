@@ -99,11 +99,13 @@ export default function App() {
     setIsLoading(true);
     try {
       const data = await database.getAllPosts();
-      // Filtrer côté front : on ne montre que Février et Mars (mois 02 et 03)
-      // Les données Dec/Jan restent en base de données
+      // Filtrer côté front : on ne montre que Mars (à partir du 13) et Avril
+      // Les données antérieures restent en base de données
       const filtered = data.filter(p => {
-        const month = parseInt(p.date.split('/')[1]);
-        return month === 2 || month === 3;
+        const [day, month] = p.date.split('/').map(Number);
+        if (month === 3 && day >= 13) return true;
+        if (month === 4) return true;
+        return false;
       });
       setPosts(sortPostsByDate(filtered));
       setConnectionStatus('connected');
