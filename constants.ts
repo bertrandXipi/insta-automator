@@ -840,6 +840,17 @@ export const STRATEGY_POSTS: Post[] = [
 
   // --- WEEK 15 (13/03 - 15/03) ---
   {
+    id: 'p51', week: 15, day: 'Jeudi', date: '13/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "Le Printemps Arrive au Port",
+    caption: "Les jours rallongent. ☀️\n\nLe port de Saint-Jean-de-Luz sous la lumière de mars.\nLes bateaux se préparent, la saison redémarre.\n\nOn a hâte.",
+    hashtags: ["#SaintJeanDeLuz", "#Port", "#Printemps", "#PaysBasque", "#JeanDeLuz"],
+    cta: "Prêts pour la nouvelle saison ?",
+    visualPrompt: "Port de St-Jean-de-Luz, lumière dorée de fin de journée, bateaux amarrés.",
+    imageUrl: "https://picsum.photos/id/1021/800/800",
+    published: false
+  },
+  {
     id: 'p44', week: 15, day: 'Samedi', date: '14/03',
     phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
     title: "Marché de St-Jean",
@@ -847,8 +858,32 @@ export const STRATEGY_POSTS: Post[] = [
     hashtags: ["#Marche", "#SaintJeanDeLuz", "#Local", "#PaysBasque", "#Terroir"],
     cta: "Quel est votre marché préféré ?",
     visualPrompt: "Ambiance marché, étals colorés, foule, produits frais.",
-    imageUrl: "https://picsum.photos/id/1021/800/800",
+    imageUrl: "https://picsum.photos/id/1038/800/800",
     published: false
+  },
+  {
+    id: 'c26', week: 15, day: 'Vendredi', date: '14/03',
+    phase: 'Printemps', theme: 'Brand', format: 'Story',
+    title: "[CLIENT] Reprise de Saison",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nAmbiance reprise, préparation des nouveautés.",
+    hashtags: ["#JeanDeLuz", "#Reprise", "#NouveauDepart"],
+    cta: "C'est reparti !",
+    visualPrompt: "Story ambiance atelier, reprise d'activité (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1039/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'c27', week: 15, day: 'Samedi', date: '15/03',
+    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
+    title: "[CLIENT] Produit du Jour",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nMise en avant d'un produit phare.",
+    hashtags: ["#JeanDeLuz", "#Produit", "#Decouverte"],
+    cta: "Vous connaissez celui-ci ?",
+    visualPrompt: "Photo produit en situation, lumière naturelle (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1040/800/800",
+    published: false,
+    isClientManaged: true
   },
 
   // --- WEEK 16 (16/03 - 22/03) ---
@@ -935,15 +970,16 @@ export const STRATEGY_POSTS: Post[] = [
     published: false
   },
   {
-    id: 'p49', week: 17, day: 'Samedi', date: '28/03',
-    phase: 'Printemps', theme: 'Brand', format: 'Photo',
-    title: "Archives : Les Années 60",
-    caption: "1962. 📷\n\nLes quais de Saint-Jean-de-Luz.\nLes bateaux, la criée, l'effervescence.\n\n60 ans plus tard, l'âme est la même.",
-    hashtags: ["#Histoire", "#Vintage", "#Patrimoine", "#Archives", "#JeanDeLuz"],
-    cta: "Aimez-vous ces photos d'époque ?",
-    visualPrompt: "Photo N&B d'archive, port ou conserverie années 60, ambiance nostalgique.",
-    imageUrl: "https://picsum.photos/id/1028/800/800",
-    published: false
+    id: 'c28', week: 17, day: 'Samedi', date: '28/03',
+    phase: 'Printemps', theme: 'Event', format: 'Story',
+    title: "[CLIENT] Fin de Semaine",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nAmbiance fin de semaine, moment convivial.",
+    hashtags: ["#JeanDeLuz", "#WeekEnd", "#Convivialite"],
+    cta: "Bon week-end !",
+    visualPrompt: "Story ambiance détendue, fin de semaine (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1028/800/1200",
+    published: false,
+    isClientManaged: true
   },
   {
     id: 'c16', week: 17, day: 'Dimanche', date: '29/03',
@@ -1138,17 +1174,6 @@ export const STRATEGY_POSTS: Post[] = [
     published: false
   },
   {
-    id: 'p50', week: 21, day: 'Samedi', date: '25/04',
-    phase: 'Printemps', theme: 'Lifestyle', format: 'Photo',
-    title: "Terrasse de Printemps",
-    caption: "Les premiers vrais rayons. ☀️\n\nQuand le soleil revient sur les terrasses...\nC'est le signal pour ressortir l'apéro.\n\nQui est prêt ?",
-    hashtags: ["#Terrasse", "#Apero", "#Printemps", "#Soleil", "#JeanDeLuz"],
-    cta: "Premier apéro terrasse de l'année ?",
-    visualPrompt: "Table en terrasse, produits Jean de Luz, soleil couchant, ambiance conviviale.",
-    imageUrl: "https://picsum.photos/id/1029/800/800",
-    published: false
-  },
-  {
     id: 'c24', week: 21, day: 'Dimanche', date: '26/04',
     phase: 'Printemps', theme: 'Lifestyle', format: 'Story',
     title: "[CLIENT] Dimanche en Famille",
@@ -1182,6 +1207,29 @@ export const STRATEGY_POSTS: Post[] = [
     cta: "Vivement mai !",
     visualPrompt: "Story récap du mois, remerciements, teaser mai (A FAIRE PAR L'ÉQUIPE).",
     imageUrl: "https://picsum.photos/id/1031/800/1200",
+    published: false,
+    isClientManaged: true
+  },
+  {
+    id: 'p52', week: 22, day: 'Mardi', date: '28/04',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "Tartine Rillettes Express",
+    caption: "L'apéro en 30 secondes. ⏱️\n\nPain toasté + rillettes de thon + citron + ciboulette.\n\nSimple, efficace, irrésistible.",
+    hashtags: ["#Tartine", "#Rillettes", "#Apero", "#Express", "#JeanDeLuz"],
+    cta: "Testez ce soir !",
+    visualPrompt: "Vidéo rapide : toast → rillettes → zeste citron → ciboulette → dégustation.",
+    imageUrl: "https://picsum.photos/id/1041/800/1200",
+    published: false
+  },
+  {
+    id: 'c29', week: 22, day: 'Mercredi', date: '30/04',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "[CLIENT] Teaser Mai",
+    caption: "Contenu à fournir par l'équipe. 📝\n\nTeaser des nouveautés de mai, ambiance estivale.",
+    hashtags: ["#JeanDeLuz", "#Mai", "#Teaser", "#Nouveautes"],
+    cta: "Mai arrive avec des surprises !",
+    visualPrompt: "Photo teaser, ambiance lumineuse et estivale (A FAIRE PAR L'ÉQUIPE).",
+    imageUrl: "https://picsum.photos/id/1042/800/800",
     published: false,
     isClientManaged: true
   }
