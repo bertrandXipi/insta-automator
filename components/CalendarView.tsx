@@ -8,20 +8,18 @@ interface CalendarViewProps {
   onTogglePublish: (postId: string) => void;
 }
 
-type MonthFilter = 'all' | 'dec' | 'jan' | 'feb' | 'mar';
+type MonthFilter = 'all' | 'feb' | 'mar';
 
 export default function CalendarView({ posts, onPostClick, onTogglePublish }: CalendarViewProps) {
   const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
   
-  // We have 18 weeks to cover Dec 2025 - Mar 2026
-  const allWeeks = Array.from({ length: 18 }, (_, i) => i + 1);
+  // Weeks 10-18 cover Feb-Mar 2026
+  const allWeeks = Array.from({ length: 9 }, (_, i) => i + 10);
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
   // Filtrer les semaines selon le mois sélectionné
   const getWeeksForMonth = (filter: MonthFilter): number[] => {
     switch (filter) {
-      case 'dec': return [1, 2, 3, 4, 5]; // Semaines 1-5 = Décembre
-      case 'jan': return [5, 6, 7, 8, 9]; // Semaines 5-9 = Janvier
       case 'feb': return [10, 11, 12, 13]; // Semaines 10-13 = Février
       case 'mar': return [14, 15, 16, 17, 18]; // Semaines 14-18 = Mars
       default: return allWeeks;
@@ -73,28 +71,6 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
           <span>Tous ({posts.length})</span>
         </button>
         <button
-          onClick={() => setMonthFilter('dec')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-            monthFilter === 'dec' 
-              ? 'bg-jdl-red text-white' 
-              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-jdl-red"></span>
-          <span>Décembre</span>
-        </button>
-        <button
-          onClick={() => setMonthFilter('jan')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-            monthFilter === 'jan' 
-              ? 'bg-jdl-teal text-white' 
-              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-jdl-teal"></span>
-          <span>Janvier</span>
-        </button>
-        <button
           onClick={() => setMonthFilter('feb')}
           className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
             monthFilter === 'feb' 
@@ -136,8 +112,8 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
               {/* Week Number Column */}
               <div className="col-span-1 flex flex-col justify-center border-r border-gray-200 dark:border-gray-800 pr-4">
                 <span className="text-3xl font-bold text-gray-400 dark:text-gray-700">0{week}</span>
-                <span className={`text-xs uppercase font-bold mt-1 ${week <= 5 ? 'text-red-500 dark:text-jdl-red' : week <= 9 ? 'text-teal-600 dark:text-jdl-teal' : 'text-green-600 dark:text-green-400'}`}>
-                   {week <= 5 ? 'Fêtes' : week <= 9 ? 'Détox' : 'Printemps'}
+                <span className={`text-xs uppercase font-bold mt-1 text-green-600 dark:text-green-400`}>
+                   Printemps
                 </span>
               </div>
 

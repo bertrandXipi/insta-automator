@@ -7,7 +7,7 @@ interface HomeViewProps {
   onPostClick: (post: Post) => void;
 }
 
-type MonthFilter = 'all' | 'dec' | 'jan' | 'feb' | 'mar';
+type MonthFilter = 'all' | 'feb' | 'mar';
 
 export default function HomeView({ posts, onPostClick }: HomeViewProps) {
   const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
@@ -31,17 +31,12 @@ export default function HomeView({ posts, onPostClick }: HomeViewProps) {
     return new Date(yearA, monthA - 1, dayA).getTime() - new Date(yearB, monthB - 1, dayB).getTime();
   });
 
-  // Filtrage basé sur la phase avec les posts triés
-  const decemberPosts = sortedPosts.filter(p => p.phase === 'Fêtes');
-  const januaryPosts = sortedPosts.filter(p => p.phase === 'Détox');
-  const springPosts = sortedPosts.filter(p => p.phase === 'Printemps');
-  
-  // Séparer février et mars dans les posts Printemps
-  const februaryPosts = springPosts.filter(p => {
+  // Séparer février et mars
+  const februaryPosts = sortedPosts.filter(p => {
     const month = parseInt(p.date.split('/')[1]);
     return month === 2;
   });
-  const marchPosts = springPosts.filter(p => {
+  const marchPosts = sortedPosts.filter(p => {
     const month = parseInt(p.date.split('/')[1]);
     return month === 3;
   });
@@ -77,7 +72,7 @@ export default function HomeView({ posts, onPostClick }: HomeViewProps) {
       <div className="relative rounded-3xl overflow-hidden bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#252525] p-8 md:p-12 text-center shadow-xl dark:shadow-2xl">
          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-jdl-red via-jdl-gold to-jdl-teal"></div>
          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">PLANNING ÉDITORIAL</h1>
-         <p className="text-xl text-gray-500 dark:text-gray-400 font-light mb-8">Démarrage : 5 Décembre 2025</p>
+         <p className="text-xl text-gray-500 dark:text-gray-400 font-light mb-8">Février – Mars 2026</p>
          
          <div className="inline-flex flex-wrap justify-center gap-4 bg-gray-50 dark:bg-white/5 backdrop-blur-md px-6 py-3 rounded-full border border-gray-200 dark:border-white/10 shadow-sm">
              <button 
@@ -87,20 +82,6 @@ export default function HomeView({ posts, onPostClick }: HomeViewProps) {
                  <Filter size={12} />
                  <span className="text-sm font-bold">Tous</span>
              </button>
-             <button 
-               onClick={() => setMonthFilter('dec')}
-               className={`flex items-center space-x-2 px-3 py-1 rounded-full transition-all ${monthFilter === 'dec' ? 'bg-jdl-red text-white' : 'hover:bg-gray-200 dark:hover:bg-white/10'}`}
-             >
-                 <span className="w-3 h-3 rounded-full bg-jdl-red shadow-[0_0_10px_rgba(214,93,99,0.5)]"></span>
-                 <span className="text-sm font-bold text-gray-700 dark:text-white">Décembre</span>
-             </button>
-             <button 
-               onClick={() => setMonthFilter('jan')}
-               className={`flex items-center space-x-2 px-3 py-1 rounded-full transition-all ${monthFilter === 'jan' ? 'bg-jdl-teal text-white' : 'hover:bg-gray-200 dark:hover:bg-white/10'}`}
-             >
-                <span className="w-3 h-3 rounded-full bg-jdl-teal shadow-[0_0_10px_rgba(49,151,149,0.5)]"></span>
-                <span className="text-sm font-bold text-gray-700 dark:text-white">Janvier</span>
-            </button>
              <button 
                onClick={() => setMonthFilter('feb')}
                className={`flex items-center space-x-2 px-3 py-1 rounded-full transition-all ${monthFilter === 'feb' ? 'bg-green-500 text-white' : 'hover:bg-gray-200 dark:hover:bg-white/10'}`}
@@ -158,107 +139,20 @@ export default function HomeView({ posts, onPostClick }: HomeViewProps) {
              </div>
 
              {/* Focus Cards */}
-             <div className="bg-gradient-to-br from-red-50 to-white dark:from-jdl-red/20 dark:to-jdl-red/5 rounded-xl p-6 border border-red-100 dark:border-jdl-red/20 shadow-sm">
-                 <h3 className="text-jdl-red font-bold text-lg mb-2">Focus Décembre</h3>
-                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Urgence cadeau & recettes festives. Le rouge basque domine pour créer l'ambiance de Noël.</p>
-             </div>
-             
-             <div className="bg-gradient-to-br from-teal-50 to-white dark:from-jdl-teal/20 dark:to-jdl-teal/5 rounded-xl p-6 border border-teal-100 dark:border-jdl-teal/20 shadow-sm">
-                 <h3 className="text-jdl-teal font-bold text-lg mb-2">Focus Janvier</h3>
-                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Bien-être, détox & grand air. Le bleu/vert océanique reprend ses droits.</p>
+             <div className="bg-gradient-to-br from-green-50 to-white dark:from-green-900/20 dark:to-green-900/5 rounded-xl p-6 border border-green-100 dark:border-green-900/20 shadow-sm">
+                 <h3 className="text-green-600 dark:text-green-400 font-bold text-lg mb-2">Focus Février</h3>
+                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Code promo INSTA10, Saint-Valentin, engagement qualité. Contenus vivants et recettes rapides.</p>
              </div>
 
              <div className="bg-gradient-to-br from-green-50 to-white dark:from-green-900/20 dark:to-green-900/5 rounded-xl p-6 border border-green-100 dark:border-green-900/20 shadow-sm">
-                 <h3 className="text-green-600 dark:text-green-400 font-bold text-lg mb-2">Focus Fév-Mars</h3>
-                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Renouveau printanier. Contenus placeholder à personnaliser selon la stratégie.</p>
+                 <h3 className="text-green-600 dark:text-green-400 font-bold text-lg mb-2">Focus Mars</h3>
+                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">Printemps, Pâques, terrasses. Recettes légères et coffrets cadeaux.</p>
              </div>
          </div>
 
          {/* Timeline Content */}
          <div className="lg:col-span-3 space-y-10">
              
-             {/* DECEMBER SECTION */}
-             {decemberPosts.length > 0 && (monthFilter === 'all' || monthFilter === 'dec') && (
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                            <span className="w-2 h-8 bg-jdl-red mr-4 rounded-full"></span> DÉCEMBRE 2025
-                        </h2>
-                        <span className="px-3 py-1 bg-red-50 dark:bg-jdl-red/10 text-jdl-red border border-red-200 dark:border-jdl-red/20 rounded text-xs font-bold uppercase">
-                            {decemberPosts.length} Posts à venir
-                        </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {decemberPosts.map(post => (
-                            <div 
-                                key={post.id}
-                                onClick={() => onPostClick(post)}
-                                className={`bg-white dark:bg-[#1e1e1e] rounded-lg p-5 border-l-4 ${getBorderColor(post)} hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer shadow-sm border-r border-t border-b border-gray-100 dark:border-transparent relative`}
-                            >
-                                <div className="flex justify-between items-center mb-3">
-                                    <span className="text-sm font-bold text-gray-500 dark:text-gray-400">{post.date}</span>
-                                    
-                                    {post.isClientManaged ? (
-                                        <span className="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide border border-yellow-200 dark:border-jdl-gold bg-yellow-50 dark:bg-jdl-gold/20 text-yellow-700 dark:text-jdl-gold shadow-[0_0_10px_rgba(214,158,46,0.1)] ml-4">
-                                            <User size={12} className="stroke-[3]" />
-                                            <span>Post Entreprise</span>
-                                        </span>
-                                    ) : (
-                                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${getPillColor(post.theme)}`}>
-                                            {post.theme}
-                                        </span>
-                                    )}
-                                </div>
-                                <h4 className="font-bold text-gray-900 dark:text-white mb-1 line-clamp-1">{post.title}</h4>
-                                <p className="text-xs text-gray-600 dark:text-gray-500 line-clamp-2">{post.caption}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-             )}
-
-             {/* JANUARY SECTION */}
-             {januaryPosts.length > 0 && (monthFilter === 'all' || monthFilter === 'jan') && (
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 pb-4">
-                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
-                            <span className="w-2 h-8 bg-jdl-teal mr-4 rounded-full"></span> JANVIER 2026
-                        </h2>
-                        <span className="px-3 py-1 bg-teal-50 dark:bg-jdl-teal/10 text-jdl-teal border border-teal-200 dark:border-jdl-teal/20 rounded text-xs font-bold uppercase">
-                            {januaryPosts.length} Posts à venir
-                        </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {januaryPosts.map(post => (
-                            <div 
-                                key={post.id}
-                                onClick={() => onPostClick(post)}
-                                className={`bg-white dark:bg-[#1e1e1e] rounded-lg p-5 border-l-4 ${getBorderColor(post)} hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer shadow-sm border-r border-t border-b border-gray-100 dark:border-transparent relative`}
-                            >
-                                <div className="flex justify-between items-center mb-3">
-                                    <span className="text-sm font-bold text-gray-500 dark:text-gray-400">{post.date}</span>
-                                    
-                                    {post.isClientManaged ? (
-                                        <span className="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wide border border-yellow-200 dark:border-jdl-gold bg-yellow-50 dark:bg-jdl-gold/20 text-yellow-700 dark:text-jdl-gold shadow-[0_0_10px_rgba(214,158,46,0.1)] ml-4">
-                                            <User size={12} className="stroke-[3]" />
-                                            <span>Post Entreprise</span>
-                                        </span>
-                                    ) : (
-                                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${getPillColor(post.theme)}`}>
-                                            {post.theme}
-                                        </span>
-                                    )}
-                                </div>
-                                <h4 className="font-bold text-gray-900 dark:text-white mb-1 line-clamp-1">{post.title}</h4>
-                                <p className="text-xs text-gray-600 dark:text-gray-500 line-clamp-2">{post.caption}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-             )}
-
              {/* FEBRUARY SECTION */}
              {februaryPosts.length > 0 && (monthFilter === 'all' || monthFilter === 'feb') && (
                 <div className="space-y-6">
@@ -341,7 +235,7 @@ export default function HomeView({ posts, onPostClick }: HomeViewProps) {
                 </div>
              )}
              
-             {decemberPosts.length === 0 && januaryPosts.length === 0 && februaryPosts.length === 0 && marchPosts.length === 0 && (
+             {februaryPosts.length === 0 && marchPosts.length === 0 && (
                  <div className="text-center py-12 bg-white dark:bg-[#1a1a1a] rounded-xl border border-gray-200 dark:border-gray-800">
                      <Package size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-4" />
                      <p className="text-gray-500 dark:text-gray-400">Aucun post à venir. Consultez le calendrier pour voir l'historique.</p>

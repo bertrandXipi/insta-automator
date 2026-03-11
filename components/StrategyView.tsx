@@ -7,12 +7,12 @@ interface StrategyViewProps {
   onPostClick: (post: Post) => void;
 }
 
-type MonthFilter = 'all' | 'dec' | 'jan' | 'feb' | 'mar';
+type MonthFilter = 'all' | 'feb' | 'mar';
 
 export default function StrategyView({ posts, onPostClick }: StrategyViewProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
-  const phases: PostPhase[] = ['Fêtes', 'Détox', 'Printemps'];
+  const phases: PostPhase[] = ['Printemps'];
 
   // Tous les posts triés par date
   const sortedPosts = [...posts].sort((a, b) => {
@@ -29,8 +29,6 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
     if (monthFilter === 'all') return true;
     const month = parseInt(post.date.split('/')[1]);
     switch (monthFilter) {
-      case 'dec': return month === 12;
-      case 'jan': return month === 1;
       case 'feb': return month === 2;
       case 'mar': return month === 3;
       default: return true;
@@ -224,28 +222,6 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
           <span>Tous ({sortedPosts.length})</span>
         </button>
         <button
-          onClick={() => setMonthFilter('dec')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-            monthFilter === 'dec' 
-              ? 'bg-jdl-red text-white' 
-              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-jdl-red"></span>
-          <span>Décembre</span>
-        </button>
-        <button
-          onClick={() => setMonthFilter('jan')}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-            monthFilter === 'jan' 
-              ? 'bg-jdl-teal text-white' 
-              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
-          }`}
-        >
-          <span className="w-2 h-2 rounded-full bg-jdl-teal"></span>
-          <span>Janvier</span>
-        </button>
-        <button
           onClick={() => setMonthFilter('feb')}
           className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
             monthFilter === 'feb' 
@@ -271,25 +247,15 @@ export default function StrategyView({ posts, onPostClick }: StrategyViewProps) 
 
       {/* Phases summary (only in grid mode) */}
       {viewMode === 'grid' && (
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          {phases.map((phase, idx) => {
-            const count = sortedPosts.filter(p => p.phase === phase).length;
-            return (
-              <div 
-                key={phase} 
-                className={`p-4 rounded-xl border ${
-                  idx === 0 
-                    ? 'bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-900/30' 
-                    : 'bg-teal-50 dark:bg-teal-900/10 border-teal-200 dark:border-teal-900/30'
-                }`}
-              >
-                <span className={`text-xs font-bold uppercase tracking-widest ${idx === 0 ? 'text-red-600 dark:text-jdl-red' : 'text-teal-600 dark:text-jdl-teal'}`}>
-                  Phase {idx + 1} • {phase}
-                </span>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{count} posts</p>
-              </div>
-            );
-          })}
+        <div className="mb-6">
+          <div 
+            className="p-4 rounded-xl border bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-900/30"
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-green-600 dark:text-green-400">
+              Février – Mars 2026 • Printemps
+            </span>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{sortedPosts.length} posts</p>
+          </div>
         </div>
       )}
 

@@ -106,7 +106,13 @@ export default function App() {
     setIsLoading(true);
     try {
       const data = await database.getAllPosts();
-      setPosts(sortPostsByDate(data));
+      // Filtrer côté front : on ne montre que Février et Mars (mois 02 et 03)
+      // Les données Dec/Jan restent en base de données
+      const filtered = data.filter(p => {
+        const month = parseInt(p.date.split('/')[1]);
+        return month === 2 || month === 3;
+      });
+      setPosts(sortPostsByDate(filtered));
       setConnectionStatus('connected');
     } catch (error) {
       console.error("Erreur de chargement", error);

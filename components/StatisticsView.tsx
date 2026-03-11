@@ -155,7 +155,7 @@ export default function StatisticsView() {
               <CheckCircle size={20} className="text-green-600 dark:text-green-400" />
             </div>
             <span className="text-sm font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">
-              Phase de réactivation réussie
+              Bilan de la phase précédente (Déc 2025 – Jan 2026)
             </span>
           </div>
           
@@ -165,9 +165,13 @@ export default function StatisticsView() {
           <p className="text-xl text-gray-500 dark:text-gray-400 font-light mb-2">
             {STATS_DATA.period} • {STATS_DATA.duration}
           </p>
-          <p className="text-sm text-gray-400 dark:text-gray-500">
+          <p className="text-sm text-gray-400 dark:text-gray-500 mb-3">
             Compte : {STATS_DATA.followers.toLocaleString()} abonnés • Secteur : Artisanat / Agroalimentaire
           </p>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/20 rounded-full border border-green-200 dark:border-green-900/30">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span className="text-xs font-medium text-green-700 dark:text-green-300">Période active : Février – Mars 2026</span>
+          </div>
         </div>
       </div>
 
