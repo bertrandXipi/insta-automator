@@ -832,8 +832,7 @@ export const STRATEGY_POSTS: Post[] = [
     imageUrl: "https://picsum.photos/id/1031/800/1200",
     published: false,
     isClientManaged: true
-  }
-];
+  },
 
   // ============================================
   // MARS–AVRIL 2026 - Phase Printemps (à partir du 13/03)
