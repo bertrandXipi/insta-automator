@@ -126,8 +126,11 @@ export default function App() {
       
       const constantsMap = new Map(STRATEGY_POSTS.filter(p => ALLOWED_IDS.has(p.id)).map(p => [p.id, p]));
       
+      // Les posts créés par l'utilisateur ont un ID type "p1742300000000" (timestamp)
+      const isUserCreatedPost = (id: string) => /^p\d{10,}$/.test(id);
+      
       const filtered = data
-        .filter(p => ALLOWED_IDS.has(p.id))
+        .filter(p => ALLOWED_IDS.has(p.id) || isUserCreatedPost(p.id))
         .map(p => {
           const ref = constantsMap.get(p.id);
           const override = DATE_OVERRIDES[p.id];
@@ -198,6 +201,36 @@ export default function App() {
       if (success) {
         setInstagramAccount({ connected: false });
       }
+    }
+  };
+
+  const handleCreatePost = async () => {
+    const newId = `p${Date.now()}`;
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const newPost: Post = {
+      id: newId,
+      week: Math.ceil((today.getTime() - new Date(today.getFullYear(), 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000)),
+      day: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'][today.getDay()],
+      date: `${dd}/${mm}`,
+      title: '',
+      theme: 'Brand',
+      format: 'Photo' as Post['format'],
+      caption: '',
+      hashtags: [],
+      cta: '',
+      visualPrompt: '',
+      phase: 'Printemps' as Post['phase'],
+      imageUrl: '',
+      published: false,
+    };
+    setPosts(current => sortPostsByDate([...current, newPost]));
+    setSelectedPost(newPost);
+    try {
+      await database.updatePost(newPost);
+    } catch (err) {
+      console.error("Erreur création post", err);
     }
   };
 
@@ -442,7 +475,7 @@ export default function App() {
                 )}
              </div>
 
-            <button className="bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2 shadow-sm">
+            <button onClick={handleCreatePost} className="bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center space-x-2 shadow-sm">
               <PlusCircle size={16} />
               <span className="hidden sm:inline">Nouveau Post</span>
             </button>
