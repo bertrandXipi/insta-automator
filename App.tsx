@@ -18,7 +18,7 @@ import PostDetailModal from './components/PostDetailModal';
 import HomeView from './components/HomeView';
 import StatisticsView from './components/StatisticsView';
 import { database } from './services/database';
-import { APP_VERSION } from './constants';
+import { APP_VERSION, STRATEGY_POSTS } from './constants';
 
 const NAV_ITEMS: NavItem[] = [
   { id: 'home', label: 'Accueil', icon: Home },
@@ -101,12 +101,40 @@ export default function App() {
       const data = await database.getAllPosts();
       // Filtrer côté front : on ne montre que Mars (à partir du 13) et Avril
       // Les données antérieures restent en base de données
-      const filtered = data.filter(p => {
-        const [day, month] = p.date.split('/').map(Number);
-        if (month === 3 && day >= 13) return true;
-        if (month === 4) return true;
-        return false;
-      });
+      // Whitelist explicite des posts à afficher
+      // On utilise les données de constants.ts comme référence
+      // puis on override les dates pour mars et avril
+      const MARS_IDS = ['p36', 'p37', 'p38', 'p39'];
+      const AVRIL_IDS = ['p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p50'];
+      const ALLOWED_IDS = new Set([...MARS_IDS, ...AVRIL_IDS]);
+      
+      // Dates cibles pour chaque post
+      const DATE_OVERRIDES: Record<string, { date: string; week: number; day: string }> = {
+        'p36': { date: '20/03', week: 12, day: 'Vendredi' },
+        'p37': { date: '24/03', week: 13, day: 'Mardi' },
+        'p38': { date: '27/03', week: 13, day: 'Vendredi' },
+        'p39': { date: '31/03', week: 14, day: 'Mardi' },
+        'p40': { date: '02/04', week: 14, day: 'Jeudi' },
+        'p41': { date: '07/04', week: 15, day: 'Lundi' },
+        'p42': { date: '10/04', week: 15, day: 'Jeudi' },
+        'p43': { date: '14/04', week: 16, day: 'Lundi' },
+        'p44': { date: '17/04', week: 16, day: 'Jeudi' },
+        'p45': { date: '21/04', week: 17, day: 'Lundi' },
+        'p46': { date: '24/04', week: 17, day: 'Jeudi' },
+        'p50': { date: '28/04', week: 18, day: 'Lundi' },
+      };
+      
+      const constantsMap = new Map(STRATEGY_POSTS.filter(p => ALLOWED_IDS.has(p.id)).map(p => [p.id, p]));
+      
+      const filtered = data
+        .filter(p => ALLOWED_IDS.has(p.id))
+        .map(p => {
+          const ref = constantsMap.get(p.id);
+          const override = DATE_OVERRIDES[p.id];
+          const base = ref ? { ...ref, published: p.published, imageUrl: p.imageUrl || ref.imageUrl, imageUrls: p.imageUrls } : p;
+          if (override) return { ...base, date: override.date, week: override.week, day: override.day };
+          return base;
+        });
       setPosts(sortPostsByDate(filtered));
       setConnectionStatus('connected');
     } catch (error) {
