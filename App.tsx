@@ -131,7 +131,7 @@ export default function App() {
         .map(p => {
           const ref = constantsMap.get(p.id);
           const override = DATE_OVERRIDES[p.id];
-          const base = ref ? { ...ref, published: p.published, imageUrl: p.imageUrl || ref.imageUrl, imageUrls: p.imageUrls } : p;
+          const base = ref ? { ...ref, published: p.published, imageUrl: p.imageUrl !== undefined && p.imageUrl !== null ? p.imageUrl : ref.imageUrl, imageUrls: p.imageUrls !== undefined && p.imageUrls !== null ? p.imageUrls : ref.imageUrls } : p;
           if (override) return { ...base, date: override.date, week: override.week, day: override.day };
           return base;
         });
