@@ -131,7 +131,21 @@ export default function App() {
         .map(p => {
           const ref = constantsMap.get(p.id);
           const override = DATE_OVERRIDES[p.id];
-          const base = ref ? { ...ref, published: p.published, imageUrl: p.imageUrl !== undefined && p.imageUrl !== null ? p.imageUrl : ref.imageUrl, imageUrls: p.imageUrls !== undefined && p.imageUrls !== null ? p.imageUrls : ref.imageUrls } : p;
+          // Supabase (p) est la source de vérité. constants.ts (ref) = fallback pour champs absents.
+          // Pour imageUrl/imageUrls, on accepte les valeurs vides (= suppression volontaire).
+          let base: Post;
+          if (ref) {
+            base = { ...ref };
+            for (const [key, val] of Object.entries(p)) {
+              if (key === 'imageUrl' || key === 'imageUrls') {
+                if (val !== undefined && val !== null) (base as any)[key] = val;
+              } else {
+                if (val !== undefined && val !== null && val !== '') (base as any)[key] = val;
+              }
+            }
+          } else {
+            base = p;
+          }
           if (override) return { ...base, date: override.date, week: override.week, day: override.day };
           return base;
         });
