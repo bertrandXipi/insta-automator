@@ -280,6 +280,17 @@ export default function App() {
     }
   };
 
+  const handleDeletePost = async (postId: string) => {
+    setSelectedPost(null);
+    setPosts(current => current.filter(p => p.id !== postId));
+    try {
+      await database.deletePost(postId);
+    } catch (err) {
+      console.error("Erreur suppression post", err);
+      loadData();
+    }
+  };
+
   const currentPostIndex = selectedPost ? posts.findIndex(p => p.id === selectedPost.id) : -1;
   const hasPrev = currentPostIndex > 0;
   const hasNext = currentPostIndex < posts.length - 1;
@@ -500,6 +511,7 @@ export default function App() {
             onClose={() => setSelectedPost(null)} 
             onTogglePublish={handleTogglePublish}
             onUpdate={handleUpdatePost}
+            onDelete={handleDeletePost}
             onNext={handleNextPost}
             onPrev={handlePrevPost}
             hasNext={hasNext}

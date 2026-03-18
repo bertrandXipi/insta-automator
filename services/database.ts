@@ -388,6 +388,23 @@ export const database = {
     return null;
   },
 
+  // Supprimer un post
+  async deletePost(postId: string): Promise<void> {
+    if (USE_SUPABASE && supabase) {
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId);
+      if (error) {
+        console.error("Erreur Supabase delete:", error);
+        throw error;
+      }
+    } else {
+      const posts = await this.getAllPosts();
+      this.saveToLocalStorage(posts.filter(p => p.id !== postId));
+    }
+  },
+
   // Déconnecter le compte Instagram
   async disconnectInstagram(userId: string): Promise<boolean> {
     if (USE_SUPABASE && supabase) {

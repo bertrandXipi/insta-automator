@@ -10,6 +10,7 @@ interface PostDetailModalProps {
   onClose: () => void;
   onTogglePublish: (postId: string) => void;
   onUpdate: (post: Post) => void;
+  onDelete: (postId: string) => void;
   onNext: () => void;
   onPrev: () => void;
   hasNext: boolean;
@@ -94,6 +95,7 @@ export default function PostDetailModal({
   onClose, 
   onTogglePublish, 
   onUpdate,
+  onDelete,
   onNext, 
   onPrev, 
   hasNext, 
@@ -308,6 +310,19 @@ export default function PostDetailModal({
             className="absolute top-6 right-4 z-40 p-2 bg-black/50 hover:bg-jdl-red text-white rounded-full transition-colors backdrop-blur-md"
         >
             <X size={20} />
+        </button>
+
+        {/* Delete Button */}
+        <button 
+            onClick={() => {
+              if (confirm('Supprimer ce post définitivement ?')) {
+                onDelete(post.id);
+              }
+            }}
+            className="absolute top-6 right-16 z-40 p-2 bg-black/50 hover:bg-red-600 text-white rounded-full transition-colors backdrop-blur-md"
+            title="Supprimer le post"
+        >
+            <Trash2 size={20} />
         </button>
 
         {/* Left: Visual Preview & Image Management */}
