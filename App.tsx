@@ -108,7 +108,9 @@ export default function App() {
       const AVRIL_IDS = ['p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p50'];
       const ALLOWED_IDS = new Set([...MARS_IDS, ...AVRIL_IDS]);
       
-      // Dates cibles pour chaque post
+      // Dates par défaut pour chaque post (appliquées UNIQUEMENT si la date en base
+      // correspond encore à la date d'origine dans constants.ts, sinon l'utilisateur
+      // a déjà modifié la date et on respecte sa modification)
       const DATE_OVERRIDES: Record<string, { date: string; week: number; day: string }> = {
         'p36': { date: '20/03', week: 12, day: 'Vendredi' },
         'p37': { date: '24/03', week: 13, day: 'Mardi' },
@@ -134,22 +136,21 @@ export default function App() {
         .map(p => {
           const ref = constantsMap.get(p.id);
           const override = DATE_OVERRIDES[p.id];
-          // Supabase (p) est la source de vérité. constants.ts (ref) = fallback pour champs absents.
-          // Pour imageUrl/imageUrls, on accepte les valeurs vides (= suppression volontaire).
+          // Supabase est la source de vérité.
+          // constants.ts sert uniquement de fallback pour les champs manquants.
           let base: Post;
           if (ref) {
-            base = { ...ref };
-            for (const [key, val] of Object.entries(p)) {
-              if (key === 'imageUrl' || key === 'imageUrls') {
-                if (val !== undefined && val !== null) (base as any)[key] = val;
-              } else {
-                if (val !== undefined && val !== null && val !== '') (base as any)[key] = val;
-              }
-            }
+            base = { ...ref, ...p };
           } else {
             base = p;
           }
-          if (override) return { ...base, date: override.date, week: override.week, day: override.day };
+          // N'appliquer l'override de date que si la date en base est encore
+          // la date d'origine de constants.ts (= pas modifiée par l'utilisateur)
+          if (override && ref) {
+            if (!p.date || p.date === ref.date) {
+              return { ...base, date: override.date, week: override.week, day: override.day };
+            }
+          }
           return base;
         });
       setPosts(sortPostsByDate(filtered));
