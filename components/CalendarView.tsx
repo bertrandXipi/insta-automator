@@ -8,20 +8,22 @@ interface CalendarViewProps {
   onTogglePublish: (postId: string) => void;
 }
 
-type MonthFilter = 'all' | 'mar' | 'apr';
+type MonthFilter = 'all' | 'mar' | 'apr' | 'may' | 'jun';
 
 export default function CalendarView({ posts, onPostClick, onTogglePublish }: CalendarViewProps) {
   const [monthFilter, setMonthFilter] = useState<MonthFilter>('all');
   
-  // Weeks 15-22 cover Mar 13 - Apr 30 2026
-  const allWeeks = Array.from({ length: 8 }, (_, i) => i + 15);
+  // Weeks 15-26 cover Mar 13 - Jun 30 2026
+  const allWeeks = Array.from({ length: 12 }, (_, i) => i + 15);
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
   // Filtrer les semaines selon le mois sélectionné
   const getWeeksForMonth = (filter: MonthFilter): number[] => {
     switch (filter) {
-      case 'mar': return [15, 16, 17, 18]; // Semaines 15-18 = Mars (à partir du 13)
-      case 'apr': return [18, 19, 20, 21, 22]; // Semaines 18-22 = Avril
+      case 'mar': return [15, 16, 17]; // Mars (à partir du 13)
+      case 'apr': return [18, 19, 20, 21, 22]; // Avril
+      case 'may': return [18, 19, 20, 21, 22]; // Mai (certaines semaines se chevauchent)
+      case 'jun': return [23, 24, 25, 26]; // Juin
       default: return allWeeks;
     }
   };
@@ -91,6 +93,28 @@ export default function CalendarView({ posts, onPostClick, onTogglePublish }: Ca
         >
           <span className="w-2 h-2 rounded-full bg-green-500"></span>
           <span>Avril</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('may')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'may' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Mai</span>
+        </button>
+        <button
+          onClick={() => setMonthFilter('jun')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
+            monthFilter === 'jun' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-gray-100 dark:bg-[#252525] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#333]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span>Juin</span>
         </button>
       </div>
 

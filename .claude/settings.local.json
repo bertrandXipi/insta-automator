@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(gcloud builds submit *)",
+      "Bash(gcloud run deploy jean-de-luz-strategy-dashboard *)"
+    ]
+  }
+}

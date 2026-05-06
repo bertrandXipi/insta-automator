@@ -1232,5 +1232,183 @@ export const STRATEGY_POSTS: Post[] = [
     imageUrl: "https://picsum.photos/id/1042/800/800",
     published: false,
     isClientManaged: true
+  },
+  // ==================== MAI 2026 (8 posts, ~2/semaine) ====================
+  {
+    id: 'p53', week: 18, day: 'Vendredi', date: '01/05',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Thon Germon au Naturel",
+    caption: "La pureté du large, simplement mise en bocal. Notre Thon Germon au naturel révèle une chair nacrée et fondante, travaillée à la main quelques heures après le retour des bateaux. L'essentiel, sans artifice. 🐟✨",
+    hashtags: ["#ConserverieJeandeLuz", "#ThonGermon", "#GastronomieBasque", "#ProduitArtisanal", "#SaintJeandeLuz", "#SlowFood"],
+    cta: "Découvrez notre gamme !",
+    visualPrompt: "Photorealistic food photography of premium white tuna fillets from Saint-Jean-de-Luz, glistening in clear brine inside a glass jar. The jar is placed on a light grey artisanal ceramic plate with a sprig of fresh thyme. Soft diffused window light, bright and airy atmosphere. Shot with a 105mm macro lens, tack-sharp focus on the fish texture, shallow depth of field, creamy bokeh. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1050/800/800",
+    published: false
+  },
+  {
+    id: 'p54', week: 19, day: 'Lundi', date: '04/05',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Pique-nique à Sainte-Barbe",
+    caption: "Prendre de la hauteur sur les falaises de Sainte-Barbe. Une boîte de sardines, une baguette croustillante et le souffle de l'Atlantique. Le bonheur est une chose simple, savourée face à l'horizon. 🌊🥖",
+    hashtags: ["#ArtDeVivre", "#PaysBasque", "#SainteBarbe", "#PiqueniqueChic", "#Sardines", "#Evasion"],
+    cta: "Partagez votre spot préféré !",
+    visualPrompt: "Vibrant lifestyle photograph of a rustic wooden crate used as a table on the green grass of a cliff, overlooking the Atlantic ocean. An open tin of sardines, a crusty baguette, and a bowl of fresh radishes. Warm morning sunlight, soft shadows. 45-degree angle shot, rule of thirds, suggesting a peaceful moment of sharing. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1051/800/800",
+    published: false
+  },
+  {
+    id: 'p55', week: 19, day: 'Vendredi', date: '08/05',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "Le Salage - Mains d'artisan",
+    caption: "Le sel, le geste, le temps. Derrière chaque bocal, il y a la main de l'homme. Un savoir-faire ancestral qui respecte la matière pour en extraire le meilleur. L'art de la patience. ✋🧂",
+    hashtags: ["#Artisanat", "#SavoirFaire", "#MainDeLHomme", "#PatrimoineVivant", "#Conserverie", "#Qualité"],
+    cta: "Dites-nous ce que vous en pensez !",
+    visualPrompt: "Atmospheric close-up of weathered artisan hands delicately sprinkling coarse sea salt over fresh anchovies. Low-key lighting, moody Chiaroscuro effect, dark textured background. Focus on the contrast between the rough skin of the hands and the silver scales of the fish. Cinematic feel, hyper-detailed. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1052/800/800",
+    published: false
+  },
+  {
+    id: 'p56', week: 20, day: 'Lundi', date: '11/05',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Maquereaux au Citron",
+    caption: "Fraîcheur printanière : nos filets de maquereaux se marient à l'acidité vive du citron bio. Une alliance légère et pepsée, idéale pour vos salades de saison. 🍋🐟",
+    hashtags: ["#Maquereau", "#MangerSain", "#RecettePrintemps", "#CitronBio", "#FoodStyling", "#JeandeLuz"],
+    cta: "Envie de tester cette recette ?",
+    visualPrompt: "Top-down flat lay of opened mackerel tins arranged artistically on a natural linen tablecloth. Slices of organic yellow lemons and peppercorns scattered around. Soft natural light from the side, negative space for text. High-quality food styling, rustic-chic aesthetic. --ar 1:1 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1053/800/800",
+    published: false
+  },
+  {
+    id: 'p57', week: 20, day: 'Vendredi', date: '15/05',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Retour de Marché",
+    caption: "Samedi matin au marché de Saint-Jean-de-Luz. Le panier se remplit de trésors de la terre et de la mer. On prépare le déjeuner de dimanche ? 🧺🥦",
+    hashtags: ["#MarcheLocal", "#ProduitsFrais", "#SaintJeandeLuz", "#CircuitCourt", "#CuisineBasque", "#PanierGourmand"],
+    cta: "Et vous, votre marché préféré ?",
+    visualPrompt: "A wicker market basket on a stone floor, filled with fresh spring vegetables (asparagus, peas) and several glass jars of Conserverie Jean de Luz. A French newspaper and a bunch of wild flowers are peeking out. Soft morning sunlight through an open door. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1054/800/800",
+    published: false
+  },
+  {
+    id: 'p58', week: 21, day: 'Mercredi', date: '20/05',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Rillettes d'Esturgeon",
+    caption: "Onctuosité et caractère. Nos rillettes d'esturgeon sont une invitation à la gourmandise. Sur un pain de campagne toasté, c'est l'apéritif parfait. Vous en prendrez bien une tartine ? 🍞✨",
+    hashtags: ["#Rillettes", "#Esturgeon", "#AperoTime", "#Gourmandise", "#Texture", "#Terroir"],
+    cta: "Commandez dès maintenant !",
+    visualPrompt: "Extreme close-up of a rustic sourdough bread slice spread with creamy sturgeon rillettes. Topped with fresh dill and a few capers. Golden hour lighting, highlighting the creamy texture and the crumbs of the bread. Professional food photography. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1055/800/800",
+    published: false
+  },
+  {
+    id: 'p59', week: 21, day: 'Vendredi', date: '22/05',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "Rangement des Bocaux",
+    caption: "Chaque bocal trouve sa place. L'exigence se niche dans les détails, jusque dans l'alignement de nos étagères. Un temple de la conservation où le temps fait son œuvre. 🏺🕰️",
+    hashtags: ["#Tradition", "#Stockage", "#Excellence", "#Conserve", "#PassionArtisanat", "#Coulisses"],
+    cta: "Visitez notre boutique !",
+    visualPrompt: "Symmetrical shot of an artisan's hands placing jars of tuna on old wooden shelves in a dimly lit cellar. The labels are perfectly aligned. Warm, golden lighting on the glass. A sense of order, tradition, and pride. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1056/800/800",
+    published: false
+  },
+  {
+    id: 'p60', week: 22, day: 'Mercredi', date: '27/05',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Apéro Fenêtre sur le Port",
+    caption: "Fin de journée face aux bateaux qui rentrent. Le port s'apaise, et nous aussi. Un verre de blanc, quelques anchois, et le spectacle peut commencer. 🍷⛵",
+    hashtags: ["#AperoPort", "#VueSurMer", "#DouceurDeVivre", "#SaintJeandeLuz", "#PaysBasque", "#InstantPresent"],
+    cta: "Partagez votre apéro !",
+    visualPrompt: "Perspective from inside a cozy apartment, looking through an open window at the port of Saint-Jean-de-Luz at dusk. On the windowsill, a glass of white wine and a small plate of anchovies. Moody evening light, blue hour. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1057/800/800",
+    published: false
+  },
+  // ==================== JUIN 2026 (8 posts, ~2/semaine) ====================
+  {
+    id: 'p61', week: 23, day: 'Lundi', date: '01/06',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Sardines au Piment d'Espelette",
+    caption: "Le tempérament basque en boîte ! Nos sardines se marient au piment d'Espelette pour un réveil des papilles tout en finesse. Une pointe de piquant, beaucoup de caractère. 🌶️🐟",
+    hashtags: ["#PimentEspelette", "#Sardines", "#Epice", "#CuisineBasque", "#Saveurs", "#Juin"],
+    cta: "Goûtez la différence !",
+    visualPrompt: "Photorealistic food photography of spicy sardines in a vintage tin, topped with vibrant red Espelette pepper flakes. Glistening oil, rich colors. Set on a dark weathered wood background. Warm golden hour light, dramatic side shadows. Shot on 105mm macro lens. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1060/800/800",
+    published: false
+  },
+  {
+    id: 'p62', week: 23, day: 'Jeudi', date: '04/06',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Grande Tablée de Juin",
+    caption: "L'été arrive, les tablées s'allongent. On partage, on goûte, on rit. La Conserverie Jean de Luz s'invite au cœur de vos moments de convivialité. À la vôtre ! 🥂☀️",
+    hashtags: ["#Convivialite", "#Tablee", "#Amis", "#Ete2024", "#Partage", "#ArtDeRecevoir"],
+    cta: "Partagez vos moments !",
+    visualPrompt: "Lively lifestyle photograph of a long wooden table outdoors under a trellis. Multiple open cans of Conserverie Jean de Luz, bowls of olives, and local cider bottles. Dappled sunlight filtering through leaves. Warm summer vibes. --ar 16:9 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1061/800/800",
+    published: false
+  },
+  {
+    id: 'p63', week: 24, day: 'Lundi', date: '08/06',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "L'Étiquetage Manuel",
+    caption: "Signer notre travail. L'étiquetage manuel est la touche finale, le sceau de notre engagement pour la qualité. Chaque bocal passe entre nos mains avant d'arriver dans les vôtres. 🏷️✨",
+    hashtags: ["#FaitMain", "#ArtisanatFrançais", "#Qualité", "#Passion", "#Label", "#JeanDeLuz"],
+    cta: "Découvrez notre histoire !",
+    visualPrompt: "Moody close-up shot of an artisan's hands carefully applying a paper label to a glass jar. Soft warm spotlight on the jar, dark background. The texture of the paper and the glass are hyper-detailed. Authentic feel. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1062/800/800",
+    published: false
+  },
+  {
+    id: 'p64', week: 24, day: 'Jeudi', date: '11/06',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Ventrèche de Thon",
+    caption: "Le morceau de roi : la Ventrèche. Une texture soyeuse, un goût d'exception. À déguster seule, avec un filet d'huile d'olive, pour en apprécier toute la noblesse. L'excellence basque. 👑🐟",
+    hashtags: ["#Ventreche", "#ThonGermon", "#LuxeGastronomique", "#ProduitDexception", "#Gourmet", "#BasqueCountry"],
+    cta: "Commander la Ventrèche !",
+    visualPrompt: "Elegant food photography of tuna belly slices on a charcoal grey slate plate. Drizzled with golden olive oil. Minimalist composition, rich textures. Chiaroscuro lighting, deep shadows, high contrast. Luxurious feel. --ar 1:1 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1063/800/800",
+    published: false
+  },
+  {
+    id: 'p65', week: 25, day: 'Lundi', date: '15/06',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Coucher de Soleil sur la Digue",
+    caption: "Quand le ciel de juin s'embrase sur la baie. Emporter un peu de la Conserverie pour un dîner improvisé face au coucher du soleil. Magique. 🌅🌊",
+    hashtags: ["#CoucherDeSoleil", "#SaintJeandeLuz", "#BaieDeSaintJean", "#MomentMagique", "#SunsetLover", "#Ocean"],
+    cta: "Votre plus beau coucher de soleil ?",
+    visualPrompt: "A wide atmospheric shot of the Saint-Jean-de-Luz dike at sunset. Silhouettes of people walking. In the foreground, out of focus, a rustic setup with a tin of fish and a piece of bread. Orange and purple sky. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1064/800/800",
+    published: false
+  },
+  {
+    id: 'p66', week: 25, day: 'Jeudi', date: '18/06',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "La Gamme Bio",
+    caption: "Engagés pour le goût, respectueux de la nature. Découvrez notre gamme certifiée BIO. Des ingrédients sains, une pêche durable, pour une mer préservée. 🌿🌊",
+    hashtags: ["#Bio", "#PêcheDurable", "#MangerMieux", "#EcoResponsable", "#GastronomieBio", "#JeanDeLuz"],
+    cta: "Découvrez notre gamme Bio !",
+    visualPrompt: "Flat lay of the Organic range of jars (Bio), surrounded by fresh green herbs (parsley, basil) and rustic burlap fabric. Natural, earthy tones. Bright, overhead sunlight. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1065/800/800",
+    published: false
+  },
+  {
+    id: 'p67', week: 26, day: 'Lundi', date: '22/06',
+    phase: 'Printemps', theme: 'Brand', format: 'Photo',
+    title: "Préparation des Épices",
+    caption: "Réveiller les saveurs. Nous sélectionnons nos épices avec la même rigueur que nos poissons. Concassées au dernier moment, elles libèrent toute leur puissance aromatique dans nos recettes. 🌶️🧂",
+    hashtags: ["#Epices", "#Saveurs", "#SecretDeFabrication", "#Aromates", "#CuisineAuthentique", "#Artisan"],
+    cta: "Visitez notre atelier !",
+    visualPrompt: "Close-up of a stone mortar with whole peppercorns and dried red peppers being crushed. Dust of spices in the air, caught in a ray of light. Textural, vibrant, aromatic feel. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1066/800/800",
+    published: false
+  },
+  {
+    id: 'p68', week: 26, day: 'Vendredi', date: '26/06',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "L'Instant Tapas - Fin de journée",
+    caption: "L'heure de l'Ezkila. Les tapas se préparent, le cidre est frais, les sourires sont là. On termine la semaine en beauté avec les saveurs du pays. Bon week-end ! 🍏✨",
+    hashtags: ["#Tapas", "#Pintxos", "#CidreBasque", "#Sagarnoa", "#WeekendVibes", "#PaysBasque"],
+    cta: "Bon week-end à tous !",
+    visualPrompt: "Cozy close-up of a wooden board filled with various tapas (pinchos) featuring Conserverie Jean de Luz products. A glass of Basque cider (Sagarnoa) with bubbles. Warm candlelight, evening atmosphere. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1067/800/800",
+    published: false
   }
 ];

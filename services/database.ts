@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Post, InstagramAccount } from '../types';
+import { Post, InstagramAccount, StatsSnapshot, StatsSnapshotData, StatsFinancial } from '../types';
 import { STRATEGY_POSTS } from '../constants';
 
 // =================================================================================
@@ -421,5 +421,113 @@ export const database = {
       }
     }
     return false;
-  }
+  },
+
+  // ==================== STATS SNAPSHOTS ====================
+
+  async getStatsSnapshots(userId: string = 'default-user'): Promise<StatsSnapshot[]> {
+    if (USE_SUPABASE && supabase) {
+      const { data, error } = await supabase
+        .from('stats_snapshots')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Erreur fetch stats_snapshots:", error);
+        throw error;
+      }
+      return (data || []) as StatsSnapshot[];
+    }
+    return [];
+  },
+
+  async getLatestStatsSnapshot(userId: string = 'default-user'): Promise<StatsSnapshot | null> {
+    const snapshots = await this.getStatsSnapshots(userId);
+    return snapshots.length > 0 ? snapshots[0] : null;
+  },
+
+  async saveStatsSnapshot(
+    statsData: StatsSnapshotData,
+    opts: {
+      userId?: string;
+      source?: 'manual' | 'api' | 'migration';
+      businessMetrics?: StatsFinancial;
+      periodStart?: string;
+      periodEnd?: string;
+    } = {}
+  ): Promise<StatsSnapshot | null> {
+    const userId = opts.userId || 'default-user';
+    const source = opts.source || 'api';
+    const periodEnd = opts.periodEnd || new Date().toISOString().split('T')[0];
+    const durationMatch = statsData.duration.match(/(\d+)/);
+    const durationDays = durationMatch ? parseInt(durationMatch[1]) : 60;
+    const periodStartDate = new Date(periodEnd);
+    periodStartDate.setDate(periodStartDate.getDate() - durationDays);
+    const periodStart = opts.periodStart || periodStartDate.toISOString().split('T')[0];
+
+    if (USE_SUPABASE && supabase) {
+      const { data, error } = await supabase
+        .from('stats_snapshots')
+        .insert({
+          user_id: userId,
+          period: statsData.period,
+          period_start: periodStart,
+          period_end: periodEnd,
+          data: statsData,
+          source,
+          business_metrics: opts.businessMetrics || null,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Erreur save stats snapshot:", error);
+        throw error;
+      }
+      return data as StatsSnapshot;
+    }
+    return null;
+  },
+
+  async deleteStatsSnapshot(id: string): Promise<boolean> {
+    if (USE_SUPABASE && supabase) {
+      const { error } = await supabase
+        .from('stats_snapshots')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        console.error("Erreur delete stats snapshot:", error);
+        return false;
+      }
+      return true;
+    }
+    return false;
+  },
+
+  async fetchInstagramInsights(
+    userId: string = 'default-user',
+    opts: { since?: string; until?: string } = {}
+  ): Promise<{ success: boolean; data?: StatsSnapshotData; error?: string }> {
+    if (USE_SUPABASE && supabase) {
+      try {
+        const { data, error } = await supabase.functions.invoke('instagram-insights', {
+          body: { userId, since: opts.since, until: opts.until }
+        });
+
+        if (error) throw error;
+
+        if (data.success === false) {
+          return { success: false, error: data.error || data.message };
+        }
+
+        return { success: true, data: data.data };
+      } catch (e: any) {
+        console.error("Erreur fetchInstagramInsights:", e);
+        return { success: false, error: e.message };
+      }
+    }
+    return { success: false, error: "Supabase non configuré" };
+  },
 };

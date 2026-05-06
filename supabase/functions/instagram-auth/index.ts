@@ -31,7 +31,8 @@ serve(async (req) => {
     // Permissions nécessaires pour publier sur Instagram
     const scopes = [
       'instagram_basic',
-      'instagram_content_publish', 
+      'instagram_content_publish',
+      'instagram_manage_insights',
       'pages_show_list',
       'pages_read_engagement',
       'business_management'

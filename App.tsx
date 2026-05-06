@@ -16,14 +16,16 @@ import { NavItem, Post, InstagramAccount } from './types';
 import CalendarView from './components/CalendarView';
 import PostDetailModal from './components/PostDetailModal';
 import HomeView from './components/HomeView';
-import StatisticsView from './components/StatisticsView';
+import StatisticsView, { LEGACY_STATS, FEV_AVRIL_2026_STATS } from './components/StatisticsView';
 import { database } from './services/database';
 import { APP_VERSION, STRATEGY_POSTS } from './constants';
 
 const NAV_ITEMS: NavItem[] = [
   { id: 'home', label: 'Accueil', icon: Home },
   { id: 'calendar', label: 'Calendrier Éditorial', icon: CalendarIcon },
-  { id: 'statistics', label: 'Bilan & Performance', icon: BarChart3 },
+  { id: 'statistics', label: 'Performance Live', icon: BarChart3 },
+  { id: 'stats-legacy', label: 'Bilan Déc – Jan', icon: BarChart3 },
+  { id: 'stats-feb-apr', label: 'Bilan Fév – Avr', icon: BarChart3 },
 ];
 
 export default function App() {
@@ -106,7 +108,9 @@ export default function App() {
       // puis on override les dates pour mars et avril
       const MARS_IDS = ['p36', 'p37', 'p38', 'p39'];
       const AVRIL_IDS = ['p40', 'p41', 'p42', 'p43', 'p44', 'p45', 'p46', 'p50'];
-      const ALLOWED_IDS = new Set([...MARS_IDS, ...AVRIL_IDS]);
+      const MAI_IDS = ['p53', 'p54', 'p55', 'p56', 'p57', 'p58', 'p59', 'p60'];
+      const JUIN_IDS = ['p61', 'p62', 'p63', 'p64', 'p65', 'p66', 'p67', 'p68'];
+      const ALLOWED_IDS = new Set([...MARS_IDS, ...AVRIL_IDS, ...MAI_IDS, ...JUIN_IDS]);
       
       // Dates par défaut pour chaque post (appliquées UNIQUEMENT si la date en base
       // correspond encore à la date d'origine dans constants.ts, sinon l'utilisateur
@@ -124,6 +128,22 @@ export default function App() {
         'p45': { date: '21/04', week: 17, day: 'Lundi' },
         'p46': { date: '24/04', week: 17, day: 'Jeudi' },
         'p50': { date: '28/04', week: 18, day: 'Lundi' },
+        'p53': { date: '01/05', week: 18, day: 'Vendredi' },
+        'p54': { date: '04/05', week: 19, day: 'Lundi' },
+        'p55': { date: '08/05', week: 19, day: 'Vendredi' },
+        'p56': { date: '11/05', week: 20, day: 'Lundi' },
+        'p57': { date: '15/05', week: 20, day: 'Vendredi' },
+        'p58': { date: '20/05', week: 21, day: 'Mercredi' },
+        'p59': { date: '22/05', week: 21, day: 'Vendredi' },
+        'p60': { date: '27/05', week: 22, day: 'Mercredi' },
+        'p61': { date: '01/06', week: 23, day: 'Lundi' },
+        'p62': { date: '04/06', week: 23, day: 'Jeudi' },
+        'p63': { date: '08/06', week: 24, day: 'Lundi' },
+        'p64': { date: '11/06', week: 24, day: 'Jeudi' },
+        'p65': { date: '15/06', week: 25, day: 'Lundi' },
+        'p66': { date: '18/06', week: 25, day: 'Jeudi' },
+        'p67': { date: '22/06', week: 26, day: 'Lundi' },
+        'p68': { date: '26/06', week: 26, day: 'Vendredi' },
       };
       
       const constantsMap = new Map(STRATEGY_POSTS.filter(p => ALLOWED_IDS.has(p.id)).map(p => [p.id, p]));
@@ -325,6 +345,10 @@ export default function App() {
         return <HomeView posts={posts} onPostClick={setSelectedPost} />;
       case 'statistics':
         return <StatisticsView />;
+      case 'stats-legacy':
+        return <StatisticsView fixedSnapshot={LEGACY_STATS} />;
+      case 'stats-feb-apr':
+        return <StatisticsView fixedSnapshot={FEV_AVRIL_2026_STATS} />;
       case 'calendar':
         return <CalendarView onPostClick={setSelectedPost} posts={posts} onTogglePublish={handleTogglePublish} />;
       default:
