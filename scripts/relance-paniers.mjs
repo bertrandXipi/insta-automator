@@ -237,19 +237,23 @@ function flagValue(args, name) {
 
 async function main() {
   const args = process.argv.slice(2);
-  const days = parseInt(flagValue(args, "--days") || "2", 10);
+  const days = parseInt(flagValue(args, "--days") || "1", 10);
+  const minHours = parseInt(flagValue(args, "--min-hours") || "2", 10);
   const filterEmail = flagValue(args, "--email")?.toLowerCase() || null;
   const redirectTo = flagValue(args, "--redirect-to") || null;
   const doSend = flag(args, "--send");
   const doPreview = flag(args, "--preview");
   const force = flag(args, "--force");
 
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - days);
+  const now = new Date();
+  const maxAge = new Date(now);
+  maxAge.setDate(maxAge.getDate() - days);
+  const minAge = new Date(now);
+  minAge.setHours(minAge.getHours() - minHours);
 
   console.log(filterEmail
     ? `🔍 Recherche du panier pour ${filterEmail}...`
-    : `🔍 Récupération des paniers abandonnés (derniers ${days} jours)...`);
+    : `🔍 Récupération des paniers abandonnés (entre ${minHours}h et ${days}j)...`);
   if (doSend) console.log(`✉️  Mode ENVOI réel${redirectTo ? ` (redirigé vers ${redirectTo})` : ""}.`);
   else console.log(`📋 Mode DRY-RUN (aucun email envoyé).`);
   console.log("");
@@ -265,7 +269,8 @@ async function main() {
     const email = c.customer?.email;
     if (!email || seen.has(email)) continue;
     if (filterEmail && email !== filterEmail) continue;
-    if (new Date(c.createdAt) < cutoff) continue;
+    const createdAt = new Date(c.createdAt);
+    if (createdAt < maxAge || createdAt > minAge) continue;
     seen.add(email);
     entries.push(buildEntry(c));
   }
@@ -298,6 +303,7 @@ async function main() {
   writeFileSync(REPORT_PATH, JSON.stringify({
     generatedAt: new Date().toISOString(),
     cutoffDays: days,
+    minHours,
     entries: entries.map(({ html, ...rest }) => rest),
   }, null, 2));
   console.log(`📄 Rapport : ${REPORT_PATH}`);
@@ -307,7 +313,7 @@ async function main() {
     return;
   }
 
-  // ---- Envoi réel ----
+  // ---- Envoi reel ----
   const sentLog = loadSentLog();
   const transporter = getTransporter();
   let sent = 0, skipped = 0, failed = 0;
