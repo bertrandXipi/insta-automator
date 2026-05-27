@@ -609,6 +609,7 @@ export default function StatisticsView({ fixedSnapshot }: { fixedSnapshot?: Stat
             {isMigrating ? 'Import...' : 'Déc–Jan 2026'}
           </button>
         </div>
+      </div>
       )}
 
       {/* Financial editor */}

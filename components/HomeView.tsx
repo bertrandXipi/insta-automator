@@ -286,16 +286,3 @@ function PostCard({ post, onClick, getBorderColor, getPillColor }: { post: Post,
         </div>
     );
 }
-
-                 <div className="text-center py-12 bg-white dark:bg-[#1a1a1a] rounded-xl border border-gray-200 dark:border-gray-800">
-                     <Package size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-4" />
-                     <p className="text-gray-500 dark:text-gray-400">Aucun post à venir. Consultez le calendrier pour voir l'historique.</p>
-                 </div>
-             )}
-
-         </div>
-
-      </div>
-    </div>
-  );
-}
