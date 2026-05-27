@@ -1322,6 +1322,95 @@ export const STRATEGY_POSTS: Post[] = [
     imageUrl: "https://picsum.photos/id/1057/800/800",
     published: false
   },
+  // ==================== MAI 2026 - FIN DE MOIS (8 posts, 2/jour 28-31 mai) ====================
+  {
+    id: 'p60a', week: 22, day: 'Jeudi', date: '28/05',
+    phase: 'Printemps', theme: 'Recette', format: 'Photo',
+    title: "Niçoise au Thon Germon",
+    caption: "La salade niçoise, revisitée avec notre Thon Germon. Des haricots verts croquants, des œufs mollets, quelques olives de Nice et de belles miettes de thon à l’huile d’olive. Le printemps dans l’assiette, généreux et sans chichi. 🥗🫒\n\nUne recette qui sent bon le Sud et le large. Prête en 15 minutes, parfaite pour ces longues soirées de mai.",
+    hashtags: ["#ConserverieJeandeLuz", "#ThonGermon", "#SaladeNicoise", "#RecettePrintemps", "#SaintJeandeLuz", "#CuisineMaison"],
+    cta: "Testez et montrez-nous !",
+    visualPrompt: "Overhead flat lay of a generous salade niçoise on a large white ceramic plate. Chunks of premium white albacore tuna, soft-boiled eggs cut in half, green beans, cherry tomatoes, Niçoise olives, and fresh basil leaves. Drizzle of golden olive oil. Rustic wooden table, linen napkin on the side. Bright natural daylight, soft shadows, vibrant colors. Professional food photography. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1070/800/800",
+    published: false
+  },
+  {
+    id: 'p60b', week: 22, day: 'Jeudi', date: '28/05',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Retour de Pêche au Port",
+    caption: "Les bateaux rentrent, chargés de promesses. Au port de Saint-Jean-de-Luz, chaque retour de pêche est un rituel. Les mains s’activent, les caisses se remplissent, et nous, on attend nos poissons du jour. ⛵🐟\n\nHommage à ces hommes et femmes de la mer qui perpétuent la tradition, marée après marée.",
+    hashtags: ["#SaintJeandeLuz", "#PaysBasque", "#Pêcheurs", "#PortDePêche", "#Tradition", "#ConserverieJeandeLuz"],
+    cta: "Connaissez-vous nos pêcheurs ?",
+    visualPrompt: "Documentary-style photograph of a traditional Basque fishing boat returning to the port of Saint-Jean-de-Luz at golden hour. Weathered fishermen unloading crates of fresh tuna on the dock. Warm evening light reflecting on wet cobblestones. Authentic, candid moment. Shot with a 35mm lens, natural grain, editorial feel. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1071/800/800",
+    published: false
+  },
+  {
+    id: 'p60c', week: 22, day: 'Vendredi', date: '29/05',
+    phase: 'Printemps', theme: 'Recette', format: 'Reel',
+    title: "Tartare Express Thon-Espelette",
+    caption: "2 minutes chrono. Du thon germon émietté, un filet de citron vert, une pincée de piment d’Espelette et quelques herbes fraîches. Le tartare le plus simple et le plus addictif de votre été. 🔥🍋\n\nParfait sur un toast grillé ou dans une feuille de laitue croquante. Pas d’excuse, c’est ultra rapide.",
+    hashtags: ["#RecetteExpress", "#Tartare", "#PimentEspelette", "#ThonGermon", "#ConserverieJeandeLuz", "#PaysBasque"],
+    cta: "Sauvegardez cette recette !",
+    visualPrompt: "Dynamic vertical video still of hands assembling a fresh tuna tartare in a small ceramic bowl. Flaked white tuna, lime zest being grated, red Espelette pepper sprinkled from above in motion. Fresh herbs scattered on a dark slate surface. Bright overhead lighting, action shot with slight motion blur on the falling spices. Modern food content style. --ar 9:16 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1072/800/800",
+    published: false
+  },
+  {
+    id: 'p60d', week: 22, day: 'Vendredi', date: '29/05',
+    phase: 'Printemps', theme: 'Prod', format: 'Photo',
+    title: "Sardines à l’Ancienne",
+    caption: "Certaines recettes traversent le temps sans prendre une ride. Nos sardines à l’ancienne sont préparées comme autrefois : à la main, salées au sel de Guérande, rangées une à une dans leur boîte. 🐟🧂\n\nLe packaging vintage raconte cette histoire. Celle d’un savoir-faire qui refuse de disparaître.",
+    hashtags: ["#Sardines", "#ConserverieJeandeLuz", "#Vintage", "#SavoirFaire", "#Artisanat", "#JeanDeLuz"],
+    cta: "Découvrez notre collection !",
+    visualPrompt: "Still life of vintage-style sardine tins stacked artistically on aged parchment paper. One tin is open revealing perfectly aligned silver sardines in golden olive oil. Retro typography on the labels, warm nostalgic color palette. Soft directional light from the left, dark moody background. Shot with a 90mm lens, shallow depth of field. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1073/800/800",
+    published: false
+  },
+  {
+    id: 'p60e', week: 22, day: 'Samedi', date: '30/05',
+    phase: 'Printemps', theme: 'Life', format: 'Photo',
+    title: "Pique-nique face au large",
+    caption: "Le panier est prêt, la côte nous attend. Une baguette croustillante, quelques bocaux glissés dans le sac et les pieds dans l'herbe face à l'Atlantique. Ici, on ne déjeune pas : on contemple. 🌊🧺\n\nLe vent porte le sel, le soleil chauffe les épaules. On ouvre une boîte de sardines, on tartine les rillettes sur la croûte dorée. Le Pays Basque se savoure comme ça : simplement, généreusement.\n\nBon week-end à tous. 🌿",
+    hashtags: ["#ConserverieJeandeLuz", "#PiqueniqueBasque", "#SaintJeandeLuz", "#PaysBasque", "#SlowFood", "#VieSimple"],
+    cta: "Montrez-nous votre spot !",
+    visualPrompt: "Lifestyle photograph of a wicker picnic basket on a grassy cliff overlooking the turquoise Atlantic ocean on the Basque coast. Inside the basket: a crusty French baguette, glass jars of artisanal sardines and rillettes, a linen napkin. Warm golden hour sunlight, wind in the grass, sense of freedom and simplicity. Shot at 35mm, natural colors, editorial feel. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1074/800/800",
+    published: false
+  },
+  {
+    id: 'p60f', week: 22, day: 'Samedi', date: '30/05',
+    phase: 'Printemps', theme: 'Brand', format: 'Reel',
+    title: "Sardines mises en bocal",
+    caption: "Main après main, sardine après sardine. Dans notre atelier de Saint-Jean-de-Luz, chaque poisson est placé à la main dans son bocal. Pas de machine, pas de précipitation — juste le geste juste, répété avec soin. 🐟✋\n\nCe savoir-faire, c'est notre signature. Une lenteur assumée qui fait toute la différence en bouche. Regardez ces mains travailler : elles racontent notre histoire mieux que les mots.\n\nMerci à notre équipe. 🙏",
+    hashtags: ["#ConserverieJeandeLuz", "#SavoirFaire", "#Artisanat", "#Coulisses", "#FaitMain", "#PaysBasque"],
+    cta: "Découvrez nos coulisses !",
+    visualPrompt: "Cinematic close-up of artisan hands carefully placing fresh silver sardines one by one into a glass jar in a traditional cannery workshop. Warm tungsten lighting, shallow depth of field, steam rising softly in the background. Worn wooden workbench, white apron visible. Documentary style, intimate and authentic atmosphere. --ar 9:16 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1075/800/800",
+    published: false
+  },
+  {
+    id: 'p60g', week: 22, day: 'Dimanche', date: '31/05',
+    phase: 'Printemps', theme: 'Recette', format: 'Carousel',
+    title: "Brunch dominical en 4 tartines",
+    caption: "Dimanche matin, on prend le temps. Voici 4 tartines pour un brunch qui sent bon le Pays Basque 🍞☀️\n\n1️⃣ Rillettes de thon + cornichons croquants\n2️⃣ Terrine de poisson + moutarde à l'ancienne\n3️⃣ Anchois marinés + beurre demi-sel\n4️⃣ Pâté de poisson + pickles maison\n\nToastez, tartinez, savourez. Le brunch parfait tient dans quelques bocaux bien choisis. Bon dimanche gourmand ! 🥂",
+    hashtags: ["#ConserverieJeandeLuz", "#BrunchTime", "#RecetteFacile", "#Tartines", "#SaintJeandeLuz", "#GourmandiseBasque"],
+    cta: "Quelle tartine vous tente ?",
+    visualPrompt: "Overhead flat lay of a rustic wooden brunch table with four different toasts arranged in a grid: tuna rillettes with cornichons, fish terrine with mustard, marinated anchovies with butter, fish pate with pickles. Fresh herbs scattered, linen napkin, coffee cup in corner. Bright natural morning light, clean and appetizing food styling. --ar 1:1 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1076/800/800",
+    published: false
+  },
+  {
+    id: 'p60h', week: 22, day: 'Dimanche', date: '31/05',
+    phase: 'Printemps', theme: 'Event', format: 'Photo',
+    title: "Au revoir mai, bonjour juin",
+    caption: "Mai s'achève en beauté. Pique-niques sur la côte, coulisses de l'atelier, tartines du dimanche… ce mois était riche en partages. Merci d'être là. 🙏🌅\n\nEt maintenant, un indice pour juin : un produit star revient dans une édition spéciale. Il brille, il fond, il vient du large… Vous devinez ? 👀\n\nRéponse très bientôt. L'été approche, et il sera savoureux.",
+    hashtags: ["#ConserverieJeandeLuz", "#JeanDeLuz", "#PaysBasque", "#TeaserJuin", "#Nouveauté", "#SaintJeandeLuz"],
+    cta: "Devinez en commentaire !",
+    visualPrompt: "Moody golden hour photograph of the Saint-Jean-de-Luz harbor at sunset, end of May atmosphere. In the foreground, a mysterious glass jar with a handwritten label partially hidden by a linen cloth, creating intrigue. Warm orange and blue tones, reflections on the water, fishing boats silhouetted. Nostalgic yet forward-looking mood. --ar 4:5 --style raw --v 6.0",
+    imageUrl: "https://picsum.photos/id/1077/800/800",
+    published: false
+  },
   // ==================== JUIN 2026 (8 posts, ~2/semaine) ====================
   {
     id: 'p61', week: 23, day: 'Lundi', date: '01/06',
